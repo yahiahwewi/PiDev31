@@ -4,10 +4,15 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User 
+#[UniqueEntity(fields: ['email'], message: 'Cet e-mail est déjà utilisé.')]
+
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -15,25 +20,37 @@ class User
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
     // #[Assert\EqualTo(propertyPath: 'password', message: 'The passwords do not match.')]
-private ?string $confirmPassword = null;
+// private ?string $confirmPassword = null;
 
-public function getConfirmPassword(): ?string
+// public function getConfirmPassword(): ?string
+// {
+//     return $this->confirmPassword;
+// }
+
+public function getUsername(): ?string
 {
-    return $this->confirmPassword;
+    return $this->name;
 }
 
-public function setConfirmPassword(string $confirmPassword): static
+public function getUserIdentifier():  ?string
 {
-    $this->confirmPassword = $confirmPassword;
-
-    return $this;
+    return $this->id;
 }
+
+
+// public function setConfirmPassword(string $confirmPassword): static
+// {
+//     $this->confirmPassword = $confirmPassword;
+
+//     return $this;
+// }
 
 
     #[ORM\Column(length: 255)]
@@ -47,6 +64,9 @@ public function setConfirmPassword(string $confirmPassword): static
 
     #[ORM\Column(length: 255)]
     private ?string $country = null;
+
+  
+
 
     public function getId(): ?int
     {
@@ -123,5 +143,22 @@ public function setConfirmPassword(string $confirmPassword): static
         $this->country = $country;
 
         return $this;
+    }
+
+     public function getRoles(): array
+    {
+        // Implement logic to return user roles (e.g., ['ROLE_USER'])
+        return ['ROLE_USER'];
+    }
+
+    public function getSalt(): ?string
+    {
+        // You can return null unless you are using a custom encoder
+        return null;
+    }
+
+    public function eraseCredentials()
+    {
+        // Implement if you have any sensitive information that should be erased
     }
 }
