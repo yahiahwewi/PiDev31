@@ -36,12 +36,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
 public function getUsername(): ?string
 {
-    return $this->name;
+    return $this->email;
 }
+  /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $profileRoute;
 
-public function getUserIdentifier():  ?string
+    public function getProfileRoute(): ?string
+    {
+        return $this->profileRoute;
+    }
+
+
+public function getUserIdentifier(): ?string
 {
-    return $this->id;
+    return (string) $this->id;
 }
 
 

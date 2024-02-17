@@ -13,16 +13,27 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class SecurityController extends AbstractController
 {
-    #[Route('/security', name: 'app_security')]
-    public function index(): Response
+
+
+    #[Route('/admin', name: 'admin')]
+    public function admin(): Response
     {
-        return $this->render('security/index.html.twig', [
+        return $this->render('admin/admin.html.twig', [
             'controller_name' => 'SecurityController',
         ]);
     }
 
 
-    #[Route('/', name: 'registration')]
+    #[Route('/', name: 'app_security')]
+    public function index(): Response
+    {
+        return $this->render('user/index.html.twig', [
+            'controller_name' => 'SecurityController',
+        ]);
+    }
+
+
+    #[Route('/signup', name: 'registration')]
     public function registration(Request $request, UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = new User();
@@ -41,11 +52,13 @@ class SecurityController extends AbstractController
             $entityManager->flush();
 
             // Redirect to the login page or any other page as needed
-            return $this->redirectToRoute('login');
+            return $this->redirectToRoute('app_login');
         }
 
-        return $this->render('security/registration.html.twig', [
+        return $this->render('user/registration.html.twig', [
             'form' => $form->createView(),
         ]);
     }
+
+
 }

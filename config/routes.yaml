@@ -3,3 +3,11 @@
 #    controller: App\Controller\DefaultController::index
 import:
     resource: routes/annotations.yaml
+
+default_route:
+    path: /welcome
+    controller: App\Controller\SecurityController::index
+
+app_logout:
+    path: /logout
+
