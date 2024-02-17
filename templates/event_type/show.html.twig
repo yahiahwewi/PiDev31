@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Event{% endblock %}
+
+{% block body %}
+    <div class="card custom-card">
+        <div class="card-body">
+            <h1>Event</h1>
+
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Id</th>
+                        <td>{{ event.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nom</th>
+                        <td>{{ event.Nom }}</td>
+                    </tr>
+                    <tr>
+                        <th>Description</th>
+                        <td>{{ event.Description }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date</th>
+                        <td>{{ event.Date ? event.Date|date('Y-m-d') : '' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Lieu</th>
+                        <td>{{ event.Lieu }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nb_reservation</th>
+                        <td>{{ event.nbReservation }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nb_places_dispo</th>
+                        <td>{{ event.nbPlacesDispo }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <a href="{{ path('app_event_type_index') }}">back to list</a>
+
+    <a href="{{ path('app_event_type_edit', {'id': event.id}) }}">edit</a>
+
+    {{ include('event_type/_delete_form.html.twig') }}
+{% endblock %}
