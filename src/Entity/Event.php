@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EventRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -31,6 +33,14 @@ class Event
 
     #[ORM\Column(nullable: true)]
     private ?int $nb_places_dispo = null;
+
+    #[ORM\OneToMany(targetEntity: Reservation::class, mappedBy: 'relation')]
+    private Collection $reservations;
+
+    public function __construct()
+    {
+        $this->reservations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -108,4 +118,39 @@ class Event
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Reservation>
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservation $reservation): static
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations->add($reservation);
+            $reservation->setRelation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): static
+    {
+        if ($this->reservations->removeElement($reservation)) {
+            // set the owning side to null (unless already changed)
+            if ($reservation->getRelation() === $this) {
+                $reservation->setRelation(null);
+            }
+        }
+
+        return $this;
+    }
+    public function __toString(): string
+{
+    return $this->Nom; // Or any other property you want to use as the string representation
+}
+
 }

@@ -5,6 +5,8 @@
 
 
 {% block body %}
+
+
        <div class="container">
         <h1>All Events</h1>
         <div class="row">
@@ -19,7 +21,7 @@
                             <p class="card-text"><strong>Nb_reservation:</strong> {{ event.nbReservation }}</p>
                             <p class="card-text"><strong>Nb_places_dispo:</strong> {{ event.nbPlacesDispo }}</p>
                                                         <a href="{{ path('app_event_type_show', {'id': event.id}) }}" class="btn btn-primary">Show Details</a>
-
+<a href="{{ path('app_reservation_type_new', {'id': event.id}) }}" class="btn btn-primary">Reserver</a>
                         </div>
                     </div>
                 </div>
@@ -30,5 +32,11 @@
         </div>
     </div>
         <a href="{{ path('app_event_type_index') }}">back to list</a>
+<style>
+    .card-text {
+                font-size: 18px; /* Adjust the font size as needed */
 
+        font-family: "Times New Roman", Times, serif; /* Replace "Times New Roman" with the desired font name */
+    }
+</style>
 {% endblock %}
