@@ -22,6 +22,18 @@ class EventTypeController extends AbstractController
         ]);
     }
 
+    #[Route('/events', name: 'app_list', methods: ['GET'])]
+    public function list(): Response
+    {
+        $events = $this->getDoctrine()->getRepository(Event::class)->findAll();
+
+        return $this->render('event_type/list.html.twig', [
+            'events' => $events,
+        ]);
+    }
+
+
+
     #[Route('/new', name: 'app_event_type_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -45,6 +57,7 @@ class EventTypeController extends AbstractController
     #[Route('/{id}', name: 'app_event_type_show', methods: ['GET'])]
     public function show(Event $event): Response
     {
+        
         return $this->render('event_type/show.html.twig', [
             'event' => $event,
         ]);
