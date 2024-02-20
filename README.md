@@ -20,8 +20,6 @@ TUNIKIND is an all-encompassing tourist application designed to elevate your tra
 
 - **Social Integration:** Share your travel adventures, volunteering experiences, and donations with ease on social media.
 
-- **Language Support:** TUNIKIND is available in multiple languages, ensuring accessibility for a global audience.
-
 ## Getting Started
 
 ### Prerequisites
