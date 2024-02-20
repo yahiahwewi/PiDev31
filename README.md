@@ -1,6 +1,6 @@
 # TUNIKIND - Explore, Contribute, and Travel
 
-![TUNIKIND Logo][link/to/logo.png](https://i.ibb.co/5KwFbY1/logo1.png)
+![TUNIKIND Logo](https://i.ibb.co/5KwFbY1/logo1.png)
 
 ## Overview
 
