@@ -3,6 +3,7 @@
 {% block title %}Edit Donator{% endblock %}
 
 {% block body %}
+<<<<<<< HEAD
     <h1>Edit Donator</h1>
 
     {{ include('donator/_form.html.twig', {'button_label': 'Update'}) }}
@@ -10,4 +11,27 @@
     <a href="{{ path('app_donator_index') }}">back to list</a>
 
     {{ include('donator/_delete_form.html.twig') }}
+=======
+    <div class="card custom-card">
+        <div class="card-body">
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            <h1 class="mb-4">Edit Donator</h1>
+
+            <div class="mb-4">
+                {{ include('donator/_form.html.twig', {'button_label': 'Update'}) }}
+            </div>
+
+            <div class="text-end">
+                <a href="{{ path('app_donator_index') }}" class="btn btn-sm btn-outline-secondary">
+                    <i class="fas fa-arrow-left me-2"></i> Back to list
+                </a>
+            </div>
+        </div>
+    </div>
+>>>>>>> main
 {% endblock %}

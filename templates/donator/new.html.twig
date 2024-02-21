@@ -3,9 +3,77 @@
 {% block title %}New Donator{% endblock %}
 
 {% block body %}
+<<<<<<< HEAD
     <h1>Create new Donator</h1>
 
     {{ include('donator/_form.html.twig') }}
 
     <a href="{{ path('app_donator_index') }}">back to list</a>
+=======
+  
+
+    {% block header %}
+   
+        {{ parent() }}
+    {% endblock %}
+  
+    
+    <div class="card custom-card">
+        <div class="card-body">
+            <h1 class="mb-4">Create New Donator</h1>
+
+            {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+            
+            <div class="mb-3">
+                {{ form_row(form.Nom, {'attr': {'class': 'form-control', 'placeholder': 'Enter name'}}) }}
+                {% if form_errors(form.Nom) %}
+                    <div class="invalid-feedback">{{ form_errors(form.Nom) }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                {{ form_row(form.Prenom, {'attr': {'class': 'form-control', 'placeholder': 'Enter prenom'}}) }}
+                {% if form_errors(form.Prenom) %}
+                    <div class="invalid-feedback">{{ form_errors(form.Prenom) }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                {{ form_row(form.Email, {'attr': {'class': 'form-control', 'placeholder': 'Enter email'}}) }}
+                {% if form_errors(form.Email) %}
+                    <div class="invalid-feedback">{{ form_errors(form.Email) }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                {{ form_row(form.Password, {'attr': {'class': 'form-control', 'placeholder': 'Enter password'}}) }}
+                {% if form_errors(form.Password) %}
+                    <div class="invalid-feedback">{{ form_errors(form.Password) }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                {{ form_row(form.Montant, {'attr': {'class': 'form-control', 'placeholder': 'Enter Montant'}}) }}
+                {% if form_errors(form.Montant) %}
+                    <div class="invalid-feedback">{{ form_errors(form.Montant) }}</div>
+                {% endif %}
+            </div>
+            <p>Date de création : {{ donator.createdAt|date('d/m/Y H:i:s') }}</p>
+
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="fas fa-save me-2"></i> Save
+                </button>
+            </div>
+            {{ form_end(form) }}
+
+            <div class="d-flex justify-content-between align-items-center mt-4">
+                <a href="{{ path('app_donator_index') }}" class="btn btn-sm btn-outline-secondary">
+                    <i class="fas fa-arrow-left me-2"></i> Back to List
+                </a>
+            </div>
+        </div>
+    </div>
+>>>>>>> main
 {% endblock %}

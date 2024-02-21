@@ -1,7 +1,7 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,13 +23,16 @@ Journey Template
 http://www.templatemo.com/tm-511-journey
 -->
     <!-- load stylesheets -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">  <!-- Google web font "Open Sans" -->
-    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">                <!-- Font Awesome -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">                                      <!-- Bootstrap style -->
-    <link rel="stylesheet" type="text/css" href="css/datepicker.css"/>
-    <link rel="stylesheet" type="text/css" href="slick/slick.css"/>
-    <link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
-    <link rel="stylesheet" href="css/templatemo-style.css">                                   <!-- Templatemo style -->
+    <link rel="stylesheet" href="{{ asset('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700') }}"> <!-- Google web font "Open Sans" -->
+    <link rel="stylesheet" href="{{ asset('font-awesome-4.7.0/css/font-awesome.min.css') }}"> <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}"> <!-- Bootstrap style -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/datepicker.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('slick/slick.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('slick/slick-theme.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/templatemo-style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/templatemo-style.css') }}">
+                          <!-- Templatemo style -->
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -50,7 +53,9 @@ http://www.templatemo.com/tm-511-journey
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   }
 </style>
-      <header>
+
+{% block body %}
+
       {% block header %}
         <div class="tm-main-content" id="top">
             <div class="tm-top-bar-bg"></div>    
@@ -59,7 +64,7 @@ http://www.templatemo.com/tm-511-journey
                     <div class="row">
                         <nav class="navbar navbar-expand-lg narbar-light">
                             <a class="navbar-brand mr-auto" href="#">
-                                <img src="img/logo1.png" alt="Site logo">
+                        <img src="{{ asset('img/logo1.png') }}" alt="Site logo">
                                 TuniKind
                             </a>
                             <button type="button" id="nav-toggle" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#mainNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -76,9 +81,12 @@ http://www.templatemo.com/tm-511-journey
                                 <li class="nav-item">
                                     <a class="nav-link" href="#tm-section-3">Recommended Places</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#tm-section-4">Contact Us</a>
-                                </li>
+                                   {# {% if app.user %}
+                                    <li class="nav-link">
+                                        <a href="{{ path('app_logout') }}">Logout</a>
+                                    </li>
+                                {% endif %} #}
+                               
                             </ul>
                         </div>                            
                     </nav>
@@ -87,21 +95,25 @@ http://www.templatemo.com/tm-511-journey
         </div> <!-- .tm-top-bar -->
 {% endblock %}
 </header>
-      <body>
-{% block body %}
-        <div class="tm-page-wrap mx-auto">
-            <section class="tm-banner">
-                <div class="tm-container-outer tm-banner-bg">
-                    <div class="container">
+<div class="tm-page-wrap mx-auto">
+    <section class="tm-banner">
+        <div class="tm-container-outer tm-banner-bg">
+            <div class="container">
 
-                        <div class="row tm-banner-row tm-banner-row-header">
-                            <div class="col-xs-12">
-                                <div class="tm-banner-header">
-                                    <h1 class="text-uppercase tm-banner-title">Let's begin</h1>
-                                    <img src="img/dots-3.png" alt="Dots">
-                                    <p class="tm-banner-subtitle">We assist you to choose the best.</p>
-                                    <a href="javascript:void(0)" class="tm-down-arrow-link"><i class="fa fa-2x fa-angle-down tm-down-arrow"></i></a>       
-                                </div>    
+                <div class="row tm-banner-row tm-banner-row-header">
+                    <div class="col-xs-12">
+                        <div class="tm-banner-header">
+                            <h1 class="text-uppercase tm-banner-title">Let's begin</h1>
+                            <img src="{{ asset('img/dots-3.png') }}" alt="Dots">
+                            <p class="tm-banner-subtitle">We assist you to choose the best.</p>
+                            <a href="javascript:void(0)" class="tm-down-arrow-link"><i class="fa fa-2x fa-angle-down tm-down-arrow"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
                             </div>  <!-- col-xs-12 -->                      
                         </div> <!-- row -->
                         <div class="row tm-banner-row" id="tm-section-search">
@@ -199,9 +211,9 @@ http://www.templatemo.com/tm-511-journey
             <div class="tm-container-outer" id="tm-section-2">
                 <section class="tm-slideshow-section">
                     <div class="tm-slideshow">
-                        <img src="img/tm-img-01.jpg" alt="Image">
-                        <img src="img/tm-img-02.jpg" alt="Image">
-                        <img src="img/tm-img-03.jpg" alt="Image">    
+<img src="{{ asset('img/tm-img-01.jpg') }}" alt="Image">
+<img src="{{ asset('img/tm-img-02.jpg') }}" alt="Image">
+<img src="{{ asset('img/tm-img-03.jpg') }}" alt="Image">
                     </div>
                     <div class="tm-slideshow-description tm-bg-primary">
                         <h2 class="">Europe's most visited places</h2>
@@ -212,9 +224,9 @@ http://www.templatemo.com/tm-511-journey
                 <section class="clearfix tm-slideshow-section tm-slideshow-section-reverse">
 
                     <div class="tm-right tm-slideshow tm-slideshow-highlight">
-                        <img src="img/tm-img-02.jpg" alt="Image">
-                        <img src="img/tm-img-03.jpg" alt="Image">
-                        <img src="img/tm-img-01.jpg" alt="Image">
+<img src="{{ asset('img/tm-img-02.jpg') }}" alt="Image">
+<img src="{{ asset('img/tm-img-03.jpg') }}" alt="Image">
+<img src="{{ asset('img/tm-img-01.jpg') }}" alt="Image">
                     </div> 
 
                     <div class="tm-slideshow-description tm-slideshow-description-left tm-bg-highlight">
@@ -226,9 +238,9 @@ http://www.templatemo.com/tm-511-journey
                 </section>
                 <section class="tm-slideshow-section">
                     <div class="tm-slideshow">
-                        <img src="img/tm-img-03.jpg" alt="Image">
-                        <img src="img/tm-img-02.jpg" alt="Image">
-                        <img src="img/tm-img-01.jpg" alt="Image">
+<img src="{{ asset('img/tm-img-03.jpg') }}" alt="Image">
+<img src="{{ asset('img/tm-img-02.jpg') }}" alt="Image">
+<img src="{{ asset('img/tm-img-01.jpg') }}" alt="Image">
                     </div>
                     <div class="tm-slideshow-description tm-bg-primary">
                         <h2 class="">America's most famous places</h2>
@@ -241,43 +253,43 @@ http://www.templatemo.com/tm-511-journey
                 <ul class="nav nav-pills tm-tabs-links">
                     <li class="tm-tab-link-li">
                         <a href="#1a" data-toggle="tab" class="tm-tab-link">
-                            <img src="img/north-america.png" alt="Image" class="img-fluid">
+<img src="{{ asset('img/north-america.png') }}" alt="Image" class="img-fluid">
                             North America
                         </a>
                     </li>
                     <li class="tm-tab-link-li">
                         <a href="#2a" data-toggle="tab" class="tm-tab-link">
-                            <img src="img/south-america.png" alt="Image" class="img-fluid">
+<img src="{{ asset('img/south-america.png') }}" alt="Image" class="img-fluid">
                             South America
                         </a>
                     </li>
                     <li class="tm-tab-link-li">
                         <a href="#3a" data-toggle="tab" class="tm-tab-link">
-                            <img src="img/europe.png" alt="Image" class="img-fluid">
+<img src="{{ asset('img/europe.png') }}" alt="Image" class="img-fluid">
                             Europe
                         </a>
                     </li>
                     <li class="tm-tab-link-li">
                         <a href="#4a" data-toggle="tab" class="tm-tab-link active"><!-- Current Active Tab -->
-                            <img src="img/asia.png" alt="Image" class="img-fluid">
+<img src="{{ asset('img/asia.png') }}" alt="Image" class="img-fluid">
                             Asia
                         </a>
                     </li>
                     <li class="tm-tab-link-li">
                         <a href="#5a" data-toggle="tab" class="tm-tab-link">
-                            <img src="img/africa.png" alt="Image" class="img-fluid">
+<img src="{{ asset('img/africa.png') }}" alt="Image" class="img-fluid">
                             Africa
                         </a>
                     </li>
                     <li class="tm-tab-link-li">
                         <a href="#6a" data-toggle="tab" class="tm-tab-link">
-                            <img src="img/australia.png" alt="Image" class="img-fluid">
+<img src="{{ asset('img/australia.png') }}" alt="Image" class="img-fluid">
                             Australia
                         </a>
                     </li>
                     <li class="tm-tab-link-li">
                         <a href="#7a" data-toggle="tab" class="tm-tab-link">
-                            <img src="img/antartica.png" alt="Image" class="img-fluid">
+<img src="{{ asset('img/antartica.png') }}" alt="Image" class="img-fluid">
                             Antartica
                         </a>
                     </li>
@@ -288,7 +300,7 @@ http://www.templatemo.com/tm-511-journey
                     <div class="tab-pane fade" id="1a">
                         <div class="tm-recommended-place-wrap">
                             <div class="tm-recommended-place">
-                                <img src="img/tm-img-06.jpg" alt="Image" class="img-fluid tm-recommended-img">
+<img src="{{ asset('img/tm-img-06.jpg') }}" alt="Image" class="img-fluid tm-recommended-img">
                                 <div class="tm-recommended-description-box">
                                     <h3 class="tm-recommended-title">North Garden Resort</h3>
                                     <p class="tm-text-highlight">One North</p>
@@ -301,7 +313,7 @@ http://www.templatemo.com/tm-511-journey
                             </div>
 
                             <div class="tm-recommended-place">
-                                <img src="img/tm-img-07.jpg" alt="Image" class="img-fluid tm-recommended-img">
+<img src="{{ asset('img/tm-img-07.jpg') }}" alt="Image" class="img-fluid tm-recommended-img">
                                 <div class="tm-recommended-description-box">
                                     <h3 class="tm-recommended-title">Felis nec dignissim</h3>
                                     <p class="tm-text-highlight">Two North</p>

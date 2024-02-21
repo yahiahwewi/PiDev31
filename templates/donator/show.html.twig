@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 
+<<<<<<< HEAD
 {% block title %}Donator{% endblock %}
 
 {% block body %}
@@ -31,4 +32,61 @@
     <a href="{{ path('app_donator_edit', {'id': donator.id}) }}">edit</a>
 
     {{ include('donator/_delete_form.html.twig') }}
+=======
+{% block title %}Donator Details{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <div class="card custom-card">
+            <div class="card-body">
+                <h5 class="card-title text-center mb-4">Donator Details</h5>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <th scope="row" class="w-25">Id</th>
+                                <td>{{ donator.id }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="w-25">Nom</th>
+                                <td>{{ donator.Nom }}</td> <!-- Correction ici -->
+                            </tr>
+                            <tr>
+                                <th scope="row" class="w-25">Prénom</th>
+                                <td>{{ donator.Prenom }}</td> <!-- Correction ici -->
+                            </tr>
+                            <tr>
+                                <th scope="row" class="w-25">Email</th>
+                                <td>{{ donator.Email }}</td> <!-- Correction ici -->
+                            </tr>
+                            <tr>
+                                <th scope="row" class="w-25">Password</th>
+                                <td class="masked-password">{{ donator.Password }}</td> <!-- Correction ici -->
+                            </tr>
+                            <tr>
+                                <th scope="row" class="w-25">Montant</th> <!-- Correction ici -->
+                                <td class="masked-password">{{ donator.Montant }}</td> <!-- Correction ici -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <a href="{{ path('app_donator_index') }}" class="btn btn-sm btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-2"></i> Back to List
+                    </a>
+
+                    <div class="d-flex">
+                        <a href="{{ path('app_donator_edit', {'id': donator.id}) }}" class="btn btn-sm btn-outline-primary me-2">
+                            <i class="fas fa-edit me-2"></i> Edit
+                        </a>
+
+                        {{ include('donator/_delete_form.html.twig', {'id': donator.id}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+>>>>>>> main
 {% endblock %}
