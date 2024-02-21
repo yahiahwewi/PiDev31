@@ -10,19 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-<<<<<<< HEAD
-
-#[Route('/donator')]
-class DonatorController extends AbstractController
-{
-    #[Route('/', name: 'app_donator_index', methods: ['GET'])]
-    public function index(DonatorRepository $donatorRepository): Response
-    {
-        return $this->render('donator/index.html.twig', [
-            'donators' => $donatorRepository->findAll(),
-        ]);
-    }
-=======
 use Knp\Component\Pager\PaginatorInterface; // Importez la classe PaginatorInterface
 
 class DonatorController extends AbstractController
@@ -50,7 +37,6 @@ class DonatorController extends AbstractController
         ]);
     }
     
->>>>>>> main
 
     #[Route('/new', name: 'app_donator_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -63,14 +49,6 @@ class DonatorController extends AbstractController
             $entityManager->persist($donator);
             $entityManager->flush();
 
-<<<<<<< HEAD
-            return $this->redirectToRoute('app_donator_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('donator/new.html.twig', [
-            'donator' => $donator,
-            'form' => $form,
-=======
             $this->addFlash('success', 'Donator created successfully !');
 
             return $this->redirectToRoute('app_donator_index', [], Response::HTTP_SEE_OTHER);
@@ -79,15 +57,10 @@ class DonatorController extends AbstractController
         return $this->render('donator/new.html.twig', [
             'donator' => $donator,
             'form' => $form->createView(),
->>>>>>> main
         ]);
     }
 
     #[Route('/{id}', name: 'app_donator_show', methods: ['GET'])]
-<<<<<<< HEAD
-    public function show(Donator $donator): Response
-    {
-=======
     public function show(int $id, DonatorRepository $donatorRepository): Response
     {
         $donator = $donatorRepository->find($id);
@@ -96,29 +69,12 @@ class DonatorController extends AbstractController
             throw $this->createNotFoundException('Donator not found');
         }
 
->>>>>>> main
         return $this->render('donator/show.html.twig', [
             'donator' => $donator,
         ]);
     }
 
     #[Route('/{id}/edit', name: 'app_donator_edit', methods: ['GET', 'POST'])]
-<<<<<<< HEAD
-    public function edit(Request $request, Donator $donator, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(DonatorType::class, $donator);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_donator_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('donator/edit.html.twig', [
-            'donator' => $donator,
-            'form' => $form,
-=======
     public function edit(Request $request, int $id, EntityManagerInterface $entityManager, DonatorRepository $donatorRepository): Response
     {
         // Récupérer l'entité Donator en fonction de son identifiant
@@ -148,7 +104,6 @@ class DonatorController extends AbstractController
         return $this->render('donator/edit.html.twig', [
             'donator' => $donator,
             'form' => $form->createView(),
->>>>>>> main
         ]);
     }
 
@@ -158,13 +113,10 @@ class DonatorController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$donator->getId(), $request->request->get('_token'))) {
             $entityManager->remove($donator);
             $entityManager->flush();
-<<<<<<< HEAD
-=======
 
             $this->addFlash('success', 'Donator deleted successfully !');
         } else {
             $this->addFlash('error', 'Invalid CSRF token.');
->>>>>>> main
         }
 
         return $this->redirectToRoute('app_donator_index', [], Response::HTTP_SEE_OTHER);

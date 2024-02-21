@@ -1,43 +1,5 @@
 {% extends 'base.html.twig' %}
 
-<<<<<<< HEAD
-{% block title %}Donator index{% endblock %}
-
-{% block body %}
-    <h1>Donator index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Email</th>
-                <th>Password</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for donator in donators %}
-            <tr>
-                <td>{{ donator.id }}</td>
-                <td>{{ donator.Nom }}</td>
-                <td>{{ donator.Email }}</td>
-                <td>{{ donator.Password }}</td>
-                <td>
-                    <a href="{{ path('app_donator_show', {'id': donator.id}) }}">show</a>
-                    <a href="{{ path('app_donator_edit', {'id': donator.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_donator_new') }}">Create new</a>
-=======
 {% block title %}Donator's List{% endblock %}
 
 {% block body %}
@@ -107,5 +69,4 @@
             </button>
         </div>
     </div>
->>>>>>> main
 {% endblock %}
