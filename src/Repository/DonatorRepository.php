@@ -20,6 +20,15 @@ class DonatorRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Donator::class);
     }
+public function searchDonators(string $searchTerm): array
+{
+    return $this->createQueryBuilder('d')
+        ->andWhere('d.Nom LIKE :searchTerm')
+        ->orWhere('d.Email LIKE :searchTerm')
+        ->setParameter('searchTerm', '%'.$searchTerm.'%')
+        ->getQuery()
+        ->getResult();
+}
 
 //    /**
 //     * @return Donator[] Returns an array of Donator objects

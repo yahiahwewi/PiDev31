@@ -1,5 +1,5 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
-import:
-    resource: routes/annotations.yaml
+
+# config/routes/annotations.yaml
+controllers:
+    resource: ../src/Controller/
+    type: annotation

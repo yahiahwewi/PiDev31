@@ -1,0 +1,42 @@
+{{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-3">
+                {{ form_row(form.Nom, {'attr': {'class': 'form-control', 'placeholder': 'Enter name'}}) }}
+                {% if form_errors(form.Nom) %}
+                    <div class="invalid-feedback">{{ form_errors(form.Nom) }}</div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-3">
+                {{ form_row(form.Prenom, {'attr': {'class': 'form-control', 'placeholder': 'Enter first name'}}) }}
+                {% if form_errors(form.Prenom) %}
+                    <div class="invalid-feedback">{{ form_errors(form.Prenom) }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="mb-3">
+        {{ form_row(form.Email, {'attr': {'class': 'form-control', 'placeholder': 'Enter email'}}) }}
+        {% if form_errors(form.Email) %}
+            <div class="invalid-feedback">{{ form_errors(form.Email) }}</div>
+        {% endif %}
+    </div>
+    <div class="mb-3">
+        {{ form_row(form.Password, {'attr': {'class': 'form-control', 'placeholder': 'Enter password'}}) }}
+        {% if form_errors(form.Password) %}
+            <div class="invalid-feedback">{{ form_errors(form.Password) }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        {{ form_row(form.Montant, {'attr': {'class': 'form-control', 'placeholder': 'Enter Montant'}}) }}
+        {% if form_errors(form.Montant) %}
+            <div class="invalid-feedback">{{ form_errors(form.Montant) }}</div>
+        {% endif %}
+    </div>
+    <button type="submit" class="btn btn-primary">
+        <i class="fas fa-save me-2"></i> Save
+    </button>
+{{ form_end(form) }}
