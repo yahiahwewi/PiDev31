@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}View BlogPost{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="card border-primary shadow-lg">
+                    <div class="card-header bg-primary text-white">
+                        <h2 class="card-title mb-0">View BlogPost</h2>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-4">ID:</dt>
+                            <dd class="col-sm-8">{{ blog_post.id }}</dd>
+
+                            <dt class="col-sm-4">Title:</dt>
+                            <dd class="col-sm-8">{{ blog_post.title }}</dd>
+
+                            <dt class="col-sm-4">Content:</dt>
+                            <dd class="col-sm-8">{{ blog_post.content }}</dd>
+
+                            <dt class="col-sm-4">Created At:</dt>
+                            <dd class="col-sm-8">{{ blog_post.createdAt ? blog_post.createdAt|date('Y-m-d H:i:s') : '' }}</dd>
+
+                            {% if blog_post.image %}
+                                <dt class="col-sm-4">Image:</dt>
+                                <dd class="col-sm-8"><img src="{{ blog_post.image }}" alt="BlogPost Image" class="img-fluid rounded"></dd>
+                            {% endif %}
+
+                            {% if blog_post.video %}
+                                <dt class="col-sm-4">Video:</dt>
+                                <dd class="col-sm-8">
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                        <iframe class="embed-responsive-item" src="{{ blog_post.video }}" allowfullscreen></iframe>
+                                    </div>
+                                </dd>
+                            {% endif %}
+                        </dl>
+                    </div>
+                    <div class="card-footer bg-light">
+                        <a href="{{ path('app_blog_post_index') }}" class="btn btn-secondary">Back to List</a>
+                        <a href="{{ path('app_blog_post_edit', {'id': blog_post.id}) }}" class="btn btn-primary ms-2">Edit</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

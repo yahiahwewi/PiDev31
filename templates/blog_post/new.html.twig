@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New BlogPost{% endblock %}
+
+{% block body %}
+    {% block header %}
+        {{ parent() }}
+    {% endblock %}
+    <div class="card custom-card-size rounded-3 shadow"> <!-- Apply custom styling -->
+        <div class="card-body">
+            <div class="container mt-4">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card custom-card">
+                            <div class="card-header bg-primary text-white py-3"> <!-- Add padding -->
+                                <h2 class="card-title mb-0">Create New BlogPost</h2>
+                            </div>
+                            <div class="card-body">
+                                {{ include('blog_post/_form.html.twig') }}
+                            </div>
+                            <div class="card-footer text-end bg-light py-3"> <!-- Add background and padding -->
+                                <a href="{{ path('app_blog_post_index') }}" class="btn btn-outline-secondary">Back to List</a> <!-- Outline style -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
