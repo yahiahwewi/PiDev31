@@ -3,6 +3,12 @@
 {% block title %}Edit Association{% endblock %}
 
 {% block body %}
+{% block header %}
+    {{ parent() }}
+{% endblock %}
+<div class="card custom-card">
+    <div class="card-body">
+    
     <h1>Edit Association</h1>
 
     {{ include('association/_form.html.twig', {'button_label': 'Update'}) }}

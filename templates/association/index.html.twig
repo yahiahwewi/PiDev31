@@ -3,6 +3,12 @@
 {% block title %}Association index{% endblock %}
 
 {% block body %}
+{% block header %}
+    {{ parent() }}
+{% endblock %}
+<div class="card custom-card">
+    <div class="card-body">
+
     <h1>Association index</h1>
 
     <table class="table">
@@ -37,5 +43,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_association_new') }}">Create new</a>
+    <a class="btn btn-primary btn-block" href="{{ path('app_association_new') }}">Create new</a>
 {% endblock %}

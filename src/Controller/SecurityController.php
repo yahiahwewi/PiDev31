@@ -13,6 +13,17 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class SecurityController extends AbstractController
 {
+
+
+    #[Route('/', name: 'app_main')]
+    public function main(): Response
+    {
+        return $this->render('security/index.html.twig', [
+            'controller_name' => 'SecurityController',
+        ]);
+    }
+
+
     #[Route('/security', name: 'app_security')]
     public function index(): Response
     {
@@ -22,7 +33,7 @@ class SecurityController extends AbstractController
     }
 
 
-    #[Route('/', name: 'registration')]
+    #[Route('/signup', name: 'registration')]
     public function registration(Request $request, UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = new User();
