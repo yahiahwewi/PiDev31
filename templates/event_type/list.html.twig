@@ -15,7 +15,7 @@
                     <div class="card custom-card mb-3">
                         <div class="card-body">
                             <h5 class="card-title">{{ event.Nom }}</h5>
-                            <p class="card-text"><strong>Description:</strong> {{ event.Description }}</p>
+<!-- <p class="card-text"><strong>Description:</strong> {{ event.Description }}</p> -->
                             <p class="card-text"><strong>Date:</strong> {{ event.Date ? event.Date|date('Y-m-d') : '' }}</p>
                             <p class="card-text"><strong>Lieu:</strong> {{ event.Lieu }}</p>
                             <p class="card-text"><strong>Nb_reservation:</strong> {{ event.nbReservation }}</p>
@@ -38,5 +38,26 @@
 
         font-family: "Times New Roman", Times, serif; /* Replace "Times New Roman" with the desired font name */
     }
+.card-title {
+    font-size: 40px; /* Adjust the font size as needed */
+    font-family: "Times New Roman", Times, serif; /* Replace "Times New Roman" with the desired font name */
+    color: #000; /* Set the initial color */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add a subtle text shadow */
+    background: linear-gradient(45deg, #000, #333); /* Add a gradient background */
+    -webkit-background-clip: text; /* Clip the background to the text */
+    -webkit-text-fill-color: transparent; /* Set the text color to transparent to show the background */
+    animation: pulse 1s infinite alternate; /* Add a pulse animation effect */
+}
+
+@keyframes pulse {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(1.05);
+    }
+}
+
+
 </style>
 {% endblock %}

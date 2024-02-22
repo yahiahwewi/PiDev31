@@ -16,7 +16,7 @@ class EventType extends AbstractType
             ->add('Description')
             ->add('Date')
             ->add('Lieu')
-            ->add('nb_reservation')
+           // ->add('nb_reservation')
             ->add('nb_places_dispo')
         ;
     }

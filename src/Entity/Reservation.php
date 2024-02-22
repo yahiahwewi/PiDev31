@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\ReservationRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -14,18 +14,34 @@ class Reservation
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min:2)]
+    #[Assert\Length(max:20)]
+    #[Assert\NotBlank (message:"veuillez saisir le nom de l'evenement ")]
     private ?string $Nom = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min:1)]
+    #[Assert\Length(max:20)]
+    #[Assert\NotBlank (message:"veuillez saisir le prénom de l'evenement ")]
     private ?string $prenom = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Email(message: "Veuillez saisir une adresse email valide.")]
+
     private ?string $email = null;
 
     #[ORM\Column]
+    #[Assert\Length(max:3)]
+    #[Assert\Range(
+        min: 16,
+        notInRangeMessage: "L'âge doit être de 16 ans ou plus.",
+    )]
+    #[Assert\NotBlank (message:"veuillez saisir votre age ")]
     private ?int $age = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: "Veuillez spécifier si le véhicule est motorisé.")]
+
     private ?bool $motorise = null;
 
     #[ORM\ManyToOne(inversedBy: 'reservations')]
@@ -101,10 +117,12 @@ class Reservation
         return $this->relation;
     }
 
-    public function setRelation(?Event $relation): static
-    {
-        $this->relation = $relation;
+public function setRelation(?Event $relation): static
+{
+    $this->relation = $relation;
 
-        return $this;
-    }
+    return $this;
+}
+
+
 }

@@ -1,4 +1,45 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form, {'attr': {'class': 'admin-form', 'novalidate': 'novalidate'}}) }}
+    {# Display form-wide errors #}
+    {% if form_errors(form) %}
+        <div class="alert alert-danger">
+            {{ form_errors(form) }}
+        </div>
+    {% endif %}
+
+    <div class="form-group">
+        {{ form_label(form.Nom, 'Nom', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.Nom, {'attr': {'class': 'form-control'}}) }}
+        {# Display field-specific errors #}
+        {{ form_errors(form.Nom) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.Description, 'Description', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.Description, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.Description) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.Date, 'Date', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.Date, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.Date) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.Lieu, 'Lieu', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.Lieu, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.Lieu) }}
+    </div>
+
+ 
+
+    <div class="form-group">
+        {{ form_label(form.nb_places_dispo, 'Nombre de Places Disponibles', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.nb_places_dispo, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.nb_places_dispo) }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a href="{{ path('app_event_type_index') }}" class="btn btn-primary">Back to List</a>
+
 {{ form_end(form) }}

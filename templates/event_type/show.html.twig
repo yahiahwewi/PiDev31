@@ -5,16 +5,13 @@
 {% block body %}
     <div class="card custom-card">
         <div class="card-body">
-            <h1>Event</h1>
+            <h1>Event details</h1>
 
             <table class="table">
                 <tbody>
+                   
                     <tr>
-                        <th>Id</th>
-                        <td>{{ event.id }}</td>
-                    </tr>
-                    <tr>
-                        <th>Nom</th>
+                        <th>Titre</th>
                         <td>{{ event.Nom }}</td>
                     </tr>
                     <tr>
@@ -39,14 +36,15 @@
                     </tr>
                 </tbody>
             </table>
-                        <a href="{{ path('app_list') }}" class="btn btn-primary">Return to lisy</a>
+                        <a href="{{ path('app_list') }}" class="btn btn-primary">Return to list of events</a>
 
         </div>
     </div>
 
-    <a href="{{ path('app_event_type_index') }}">back to list</a>
+  {# <a href="{{ path('app_event_type_index') }}">back to list</a> #}
 
-    <a href="{{ path('app_event_type_edit', {'id': event.id}) }}">edit</a>
+{# <a href="{{ path('app_event_type_edit', {'id': event.id}) }}">edit</a> #}
+
 
 {# {{ include('event_type/_delete_form.html.twig') }} #}
 {% endblock %}

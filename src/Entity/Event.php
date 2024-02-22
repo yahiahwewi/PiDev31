@@ -7,6 +7,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
 class Event
@@ -17,15 +20,34 @@ class Event
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min:2)]
+    #[Assert\Length(max:20)]
+    #[Assert\Regex(
+        pattern: '/^[A-Z\s]+$/',
+        message: "Le titre doit être composé uniquement de lettres majuscules."
+    )]
+    #[Assert\NotBlank (message:"veuillez saisir le titre de l'evenement ")]
     private ?string $Nom = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank (message:"veuillez saisir la discription de l'evenement ")]
+
+    #[Assert\Regex(
+        pattern: '/^[A-Z]/',
+        message: "La phrase doit commencer par une lettre majuscule."
+    )]
     private ?string $Description = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotBlank(message:"Veuillez saisir une date.")]
+    #[Assert\GreaterThan(value: "today", message: "La date doit être postérieure à aujourd'hui.")]
+
     private ?\DateTimeInterface $Date = null;
 
+
+
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"Veuillez saisir le lieu.")]
     private ?string $Lieu = null;
 
     #[ORM\Column]

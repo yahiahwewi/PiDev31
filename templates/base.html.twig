@@ -16,7 +16,7 @@
  
 
 
-    <title>Journey HTML CSS Template</title>
+    <title>TuniKind</title>
     
 <!-- 
 Journey Template 
@@ -65,7 +65,7 @@ http://www.templatemo.com/tm-511-journey
                 <div class="container">
                     <div class="row">
                         <nav class="navbar navbar-expand-lg narbar-light">
-                            <a class="navbar-brand mr-auto" href="#">
+                            <a class="navbar-brand mr-auto" href="{{ path('app_list') }}">
                                 <img src="{{asset ('img/logo1.png')}}" alt="Site logo">
                                 TuniKind
                             </a>
@@ -75,7 +75,7 @@ http://www.templatemo.com/tm-511-journey
                             <div id="mainNav" class="collapse navbar-collapse tm-bg-white">
                                 <ul class="navbar-nav ml-auto">
                                   <li class="nav-item">
-                                    <a class="nav-link active" href="#top">Home <span class="sr-only">(current)</span></a>
+                                    <a class="nav-link active" href="{{ path('app_list') }}">Home <span class="sr-only">(current)</span></a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#tm-section-2">Top Destinations</a>

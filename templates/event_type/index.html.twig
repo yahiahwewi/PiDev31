@@ -33,6 +33,8 @@
                 <td>
                     <a href="{{ path('app_event_type_show', {'id': event.id}) }}">show</a>
                     <a href="{{ path('app_event_type_edit', {'id': event.id}) }}">edit</a>
+
+
                 </td>
             </tr>
         {% else %}
@@ -44,6 +46,5 @@
     </table>
     
 
-    <a href="{{ path('app_event_type_new') }}">Create new</a>
-    <a href="{{ path('app_list') }}"> phase client </a>
+<button class="btn btn-primary" onclick="location.href='{{ path('app_event_type_new') }}'">Create new</button>
 {% endblock %}

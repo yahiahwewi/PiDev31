@@ -34,7 +34,7 @@ class ReservationTypeController extends AbstractController
             throw $this->createNotFoundException('Event not found');
         }
         $reservation = new Reservation();
-        $reservation->setRelation($event);
+       $reservation->setRelation($event);
 
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);

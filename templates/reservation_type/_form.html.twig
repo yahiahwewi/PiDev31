@@ -1,4 +1,78 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form, {'attr': {'class': 'custom-form', 'novalidate': 'novalidate'}}) }}
+
+{# Display form-wide errors #}
+{% if form_errors(form) %}
+    <div class="error-message" style="color: red;">
+        {{ form_errors(form) }}
+    </div>
+{% endif %}
+
+<div class="form-group">
+    {{ form_label(form.Nom, 'Nom', {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.Nom, {'attr': {'class': 'form-control'}}) }}
+    {% if form_errors(form.Nom) %}
+        <div class="error-message" style="color: red;">
+            {{ form_errors(form.Nom) }}
+        </div>
+    {% endif %}
+</div>
+
+<div class="form-group">
+    {{ form_label(form.prenom, 'Prénom', {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
+    {% if form_errors(form.prenom) %}
+        <div class="error-message" style="color: red;">
+            {{ form_errors(form.prenom) }}
+        </div>
+    {% endif %}
+</div>
+
+<div class="form-group">
+    {{ form_label(form.email, 'Email', {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+    {% if form_errors(form.email) %}
+        <div class="error-message" style="color: red;">
+            {{ form_errors(form.email) }}
+        </div>
+    {% endif %}
+</div>
+
+<div class="form-group">
+    {{ form_label(form.age, 'Age', {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.age, {'attr': {'class': 'form-control'}}) }}
+    {% if form_errors(form.age) %}
+        <div class="error-message" style="color: red;">
+            {{ form_errors(form.age) }}
+        </div>
+    {% endif %}
+</div>
+
+<div class="row">
+    <div class="col-md-30">
+        <label class="form-label" for="{{ form.motorise.vars.id }}">Motorisé</label>
+        {{ form_widget(form.motorise, {'attr': {'class': 'form-control'}}) }}
+        {% if form_errors(form.motorise) %}
+            <div class="error-message" style="color: red;">
+                {{ form_errors(form.motorise) }}
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{#
+<div class="form-group">
+    {{ form_label(form.relation, 'Relation', {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.relation, {'attr': {'class': 'form-control'}}) }}
+    {% if form_errors(form.relation) %}
+        <div class="error-message" style="color: red;">
+            {{ form_errors(form.relation) }}
+        </div>
+    {% endif %}
+</div>
+#}
+
+
+<button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+<a href="{{ path('app_list') }}" class="btn btn-primary">Return to list of events</a>
+
 {{ form_end(form) }}
