@@ -1,3 +1,4 @@
+
 {% extends 'base.html.twig' %}
 
 {% block title %}New Association{% endblock %}
@@ -8,29 +9,43 @@
     {% endblock %}
     <div class="container mt-4">
         <div class="card custom-card">
-            <div class="card-header bg-primary text-white">
-                <h2 class="mb-0">Create new Association</h2>
+            <div class="card-header text-white"> <!-- Suppression de la classe bg-primary -->
+                <h2 class="mb-0 btn btn-primary">Create new Association</h2>
             </div>
             <div class="card-body">
-                <form>
-                    <div class="form-group">
-                        <label for="association_name">Association Name</label>
-                        <input type="text" class="form-control" id="association_name" placeholder="Enter association name">
-                    </div>
-                    <div class="form-group">
-                        <label for="association_description">Description</label>
-                        <textarea class="form-control" id="association_description" rows="3" placeholder="Enter association description"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="association_action">Action</label>
-                        <input type="text" class="form-control" id="association_action" placeholder="Enter association action">
-                    </div>
-                    <div class="form-group">
-                        <label for="association_logo">Logo</label>
-                        <input type="file" class="form-control-file" id="association_logo">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+<form method="post" enctype="multipart/form-data">
+    {{ form_start(form) }}
+
+    <div class="form-group">
+        <label for="form_nom">Nom</label>
+        {{ form_errors(form.nom) }}
+        {{ form_widget(form.nom, {'attr': {'class': 'form-control', 'id': 'form_nom'}}) }}
+    </div>
+
+    <div class="form-group">
+        <label for="form_description">Description</label>
+        {{ form_errors(form.description) }}
+        {{ form_widget(form.description, {'attr': {'class': 'form-control', 'id': 'form_description', 'minlength': 20}}) }}
+        <small class="text-muted">Minimum 20 caractères</small>
+    </div>
+
+    <div class="form-group">
+        <label for="form_logo">Logo</label>
+        {{ form_errors(form.logo) }}
+        {{ form_widget(form.logo, {'attr': {'class': 'form-control-file', 'id': 'form_logo'}}) }}
+    </div>
+
+    <div class="form-group">
+        <label for="form_siteweb">Site Web</label>
+        {{ form_errors(form.siteweb) }}
+        {{ form_widget(form.siteweb, {'attr': {'class': 'form-control', 'id': 'form_siteweb'}}) }}
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+    {{ form_end(form) }}
+</form>
             </div>
             <div class="card-footer">
                 <a href="{{ path('app_association_index') }}" class="btn btn-secondary">Back to list</a>

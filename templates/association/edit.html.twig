@@ -3,17 +3,21 @@
 {% block title %}Edit Association{% endblock %}
 
 {% block body %}
-{% block header %}
-    {{ parent() }}
-{% endblock %}
-<div class="card custom-card">
-    <div class="card-body">
+    {% block header %}
+        {{ parent() }}
+    {% endblock %}
     
-    <h1>Edit Association</h1>
+    <div class="card custom-card">
+        <div class="card-body">
+            <h1>Edit Association</h1>
 
-    {{ include('association/_form.html.twig', {'button_label': 'Update'}) }}
+            {# Include the association form with the button label 'Update' #}
+            {{ include('association/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_association_index') }}">back to list</a>
+            <a href="{{ path('app_association_index') }}">Back to list</a>
 
-    {{ include('association/_delete_form.html.twig') }}
+            {# Include the delete form for association deletion #}
+            {{ include('association/_delete_form.html.twig') }}
+        </div>
+    </div>
 {% endblock %}

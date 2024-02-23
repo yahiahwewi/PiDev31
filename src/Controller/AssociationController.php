@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 #[Route('/association')]
 class AssociationController extends AbstractController
@@ -32,6 +33,8 @@ class AssociationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($association);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Association created successfully.');
 
             return $this->redirectToRoute('app_association_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -57,7 +60,15 @@ class AssociationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $logoFile = $form->get('logo')->getData();
+
+            if ($logoFile instanceof UploadedFile) {
+                // Gérer le téléchargement du fichier
+            }
+
             $entityManager->flush();
+
+            $this->addFlash('success', 'Association updated successfully.');
 
             return $this->redirectToRoute('app_association_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -67,13 +78,15 @@ class AssociationController extends AbstractController
             'form' => $form,
         ]);
     }
-
+    
     #[Route('/{id}', name: 'app_association_delete', methods: ['POST'])]
     public function delete(Request $request, Association $association, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$association->getId(), $request->request->get('_token'))) {
             $entityManager->remove($association);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Association deleted successfully.');
         }
 
         return $this->redirectToRoute('app_association_index', [], Response::HTTP_SEE_OTHER);
