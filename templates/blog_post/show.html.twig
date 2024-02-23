@@ -1,11 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}View BlogPost{% endblock %}
+{% block title %}Post's Details{% endblock %}
 
 {% block body %}
+    {% block header %}
+        {{ parent() }}
+    {% endblock %}
     <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-8 offset-md-2">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
                 <div class="card border-primary shadow-lg">
                     <div class="card-header bg-primary text-white">
                         <h2 class="card-title mb-0">View BlogPost</h2>
@@ -20,14 +23,16 @@
 
                             <dt class="col-sm-4">Content:</dt>
                             <dd class="col-sm-8">{{ blog_post.content }}</dd>
+                             <dt class="col-sm-4">username:</dt>
+                             <dd class="col-sm-8">{{ blog_post.user.name }}</dd>
+
 
                             <dt class="col-sm-4">Created At:</dt>
                             <dd class="col-sm-8">{{ blog_post.createdAt ? blog_post.createdAt|date('Y-m-d H:i:s') : '' }}</dd>
 
-                            {% if blog_post.image %}
+                            
                                 <dt class="col-sm-4">Image:</dt>
-                                <dd class="col-sm-8"><img src="{{ blog_post.image }}" alt="BlogPost Image" class="img-fluid rounded"></dd>
-                            {% endif %}
+                                <dd class="col-sm-8"><img src="{{ asset('img/' ~ blog_post.image) }}" class="card-img-top" alt="{{ blog_post.title }}"> </dd>
 
                             {% if blog_post.video %}
                                 <dt class="col-sm-4">Video:</dt>
@@ -37,11 +42,23 @@
                                     </div>
                                 </dd>
                             {% endif %}
+                        <dt class="col-sm-4">comments</dt>
+
+                            <dd>
+                                {% for comment in Comments %}
+                                    {% if comment.BlogPostId == blog_post.id %}
+                            </br>
+                                        {{ comment.content }}
+                                    {% endif %}
+                                {% endfor %}
+                            </dd>
                         </dl>
                     </div>
                     <div class="card-footer bg-light">
                         <a href="{{ path('app_blog_post_index') }}" class="btn btn-secondary">Back to List</a>
                         <a href="{{ path('app_blog_post_edit', {'id': blog_post.id}) }}" class="btn btn-primary ms-2">Edit</a>
+                        {{ include('blog_post/_delete_form.html.twig') }}
+
                     </div>
                 </div>
             </div>

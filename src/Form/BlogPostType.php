@@ -8,23 +8,52 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType; // Import EntityType for user field
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints as Assert; // Import the Assert namespace for validation constraints
+use Symfony\Component\Validator\Constraints\File;
+
 
 class BlogPostType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title')
-            ->add('content')
-            ->add('createdAt')
-            ->add('image')
+            ->add('title', null, [
+                'constraints' => [
+                    new Assert\Length([
+                        'min' => 3,
+                        'minMessage' => 'The title should be at least {{ limit }} characters long',
+                    ]),
+                ],
+            ])
+            ->add('content', null, [
+                'constraints' => [
+                    new Assert\Length([
+                        'min' => 3,
+                        'minMessage' => 'The content should be at least {{ limit }} characters long',
+                    ]),
+                ],
+            ])
+            // ->add('createdAt')
+            ->add('image', FileType::class, [
+                'label' => 'Image',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '20048k',
+                        'mimeTypes' => ['image/*'],
+                        'mimeTypesMessage' => 'Please upload a valid image',
+                    ]),
+                ],
+            ])
             ->add('video')
-            // Configure the 'user' field as an EntityType
-            ->add('user', EntityType::class, [
-                'class' => User::class, // Specify the associated User entity class
-                'choice_label' => 'name', // Specify the property of User entity to use as label (e.g., 'name')
-                'placeholder' => 'Choose an author', // Optional placeholder text for the dropdown
-            ]);
+            // ->add('user', EntityType::class, [
+            //     'class' => User::class,
+            //     'choice_label' => 'name',
+            //     'placeholder' => 'Choose an author',
+            // ]);
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

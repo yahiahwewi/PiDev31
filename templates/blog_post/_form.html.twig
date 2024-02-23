@@ -3,14 +3,19 @@
         <div class="form-group">
             <label for="title" class="form-label">Title</label>
             {{ form_widget(form.title, {'attr': {'class': 'form-control', 'placeholder': 'Enter Title'}}) }}
+            {{form_errors(form.title)}}
         </div>
         <div class="form-group">
             <label for="content" class="form-label">Content</label>
             {{ form_widget(form.content, {'attr': {'class': 'form-control', 'placeholder': 'Enter Content'}}) }}
+            {{form_errors(form.content)}}
+
         </div>
         <div class="form-group">
             <label for="image" class="form-label">Image URL</label>
             {{ form_widget(form.image, {'attr': {'class': 'form-control', 'placeholder': 'Enter Image URL'}}) }}
+            {{form_errors(form.image)}}
+
         </div>
         <div class="form-group">
             <label for="video" class="form-label">Video URL</label>

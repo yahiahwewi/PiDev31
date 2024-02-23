@@ -1,61 +1,61 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}BlogPost index{% endblock %}
+{% block title %}Blog Posts {% endblock %}
 
 {% block body %}
     {% block header %}
         {{ parent() }}
     {% endblock %}
-    <div class="card custom-card-size"> <!-- Apply custom-card-size class here -->
-        <div class="card-body">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h1 class="mb-0">BlogPost Index</h1>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Id</th>
-                                                <th scope="col">Title</th>
-                                                <th scope="col">Content</th>
-                                                <th scope="col">Created At</th>
-                                                <th scope="col">Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for blog_post in blog_posts %}
-                                                <tr>
-                                                    <td>{{ blog_post.id }}</td>
-                                                    <td>{{ blog_post.title }}</td>
-                                                    <td>{{ blog_post.content|slice(0, 100) }}</td>
-                                                    <td>{{ blog_post.createdAt ? blog_post.createdAt|date('M d, Y') : '' }}</td>
-                                                    <td>
-                                                        <div class="d-flex">
-                                                            <a href="{{ path('app_blog_post_show', {'id': blog_post.id}) }}" class="btn btn-primary">Show</a>
-                                                            <a href="{{ path('app_blog_post_edit', {'id': blog_post.id}) }}" class="btn btn-secondary">Edit</a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            {% else %}
-                                                <tr>
-                                                    <td colspan="5">No records found</td>
-                                                </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h1 class="card-title mb-0">BlogPost Index</h1>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Id</th>
+                                        <th scope="col">Title</th>
+                                        <th scope="col">Content</th>
+                                        <th scope="col">Created At</th>
+                                        <th scope="col">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for blog_post in blog_posts %}
+                                        <tr>
+                                            <td>{{ blog_post.id }}</td>
+                                            <td>{{ blog_post.title }}</td>
+                                            <td>{{ blog_post.content|slice(0, 100) }}</td>
+                                            <td>{{ blog_post.createdAt ? blog_post.createdAt|date('M d, Y') : '' }}</td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <a href="{{ path('app_blog_post_show', {'id': blog_post.id}) }}" class="btn btn-primary">Show</a>
+                                                    <a href="{{ path('app_blog_post_edit', {'id': blog_post.id}) }}" class="btn btn-secondary">Edit</a>
+                                                    <a href="{{ path('app_commentbloc_new', {'id': blog_post.id}) }}" class="btn btn-secondary">Comment</a>
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="5">No records found</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                </div>
-                <div class="row mt-4">
-                    <div class="col-md-12 text-center">
-                        <a href="{{ path('app_blog_post_new') }}" class="btn btn-success btn-lg">Create New BlogPost</a>
+                    <div class="card-footer">
+                        <div class="row mt-4">
+                            <div class="col-md-12 text-center">
+                                <a href="{{ path('app_blog_post_new') }}" class="btn btn-success btn-lg">Create New BlogPost</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
