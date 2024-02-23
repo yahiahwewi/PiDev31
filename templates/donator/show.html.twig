@@ -3,6 +3,9 @@
 {% block title %}Donator Details{% endblock %}
 
 {% block body %}
+    {% block header %}
+        {{ parent() }}
+    {% endblock %}
     <div class="container mt-4">
         <div class="card custom-card">
             <div class="card-body">

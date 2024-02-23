@@ -3,13 +3,9 @@
 {% block title %}New Donator{% endblock %}
 
 {% block body %}
-  
-
     {% block header %}
-   
         {{ parent() }}
     {% endblock %}
-  
     
     <div class="card custom-card">
         <div class="card-body">
@@ -53,12 +49,10 @@
             </div>
             <p>Date de création : {{ donator.createdAt|date('d/m/Y H:i:s') }}</p>
 
-
-            <div class="text-center">
-                <button type="submit" class="btn btn-primary btn-lg">
-                    <i class="fas fa-save me-2"></i> Save
-                </button>
-            </div>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save me-2"></i> Create
+            </button>
+          
             {{ form_end(form) }}
 
             <div class="d-flex justify-content-between align-items-center mt-4">

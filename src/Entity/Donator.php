@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\DonatorRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -38,6 +40,14 @@ class Donator
 
  
     private ?\DateTimeInterface $createdAt = null;
+
+    #[ORM\OneToMany(mappedBy: 'Donator_id', targetEntity: DonationsList::class)]
+    private Collection $donationsLists;
+
+    public function __construct()
+    {
+        $this->donationsLists = new ArrayCollection();
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -115,6 +125,36 @@ class Donator
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DonationsList>
+     */
+    public function getDonationsLists(): Collection
+    {
+        return $this->donationsLists;
+    }
+
+    public function addDonationsList(DonationsList $donationsList): static
+    {
+        if (!$this->donationsLists->contains($donationsList)) {
+            $this->donationsLists->add($donationsList);
+            $donationsList->setDonatorId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDonationsList(DonationsList $donationsList): static
+    {
+        if ($this->donationsLists->removeElement($donationsList)) {
+            // set the owning side to null (unless already changed)
+            if ($donationsList->getDonatorId() === $this) {
+                $donationsList->setDonatorId(null);
+            }
+        }
 
         return $this;
     }

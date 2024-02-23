@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Donation{% endblock %}
+{% block body %}
+    {% block header %}
+        {{ parent() }}
+    {% endblock %}
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header text-center">Create new Donation</div>
+
+                    <div class="card-body">
+                        <form action="{{ path('app_donations_list_new') }}" method="post">
+
+                            {{ include('donations_list/_form.html.twig', {'button_label': 'Create'}) }}
+                            
+                        </form>
+                    </div>
+                </div>
+                <div class="text-center mt-3">
+                    <a href="{{ path('app_donations_list_index') }}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to list
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Donation{% endblock %}
+
+{% block body %}
+    {% block header %}
+        {{ parent() }}
+    {% endblock %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Edit Donation</h1>
+
+        <form action="{{ path('app_donations_list_edit', {'id': donations_list.id}) }}" method="post">
+            <div class="row justify-content-center mt-4">
+                <div class="col-md-6">
+                    {{ include('donations_list/_form.html.twig', {'button_label': 'Update'}) }}
+                </div>
+            </div>
+        </form>
+
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-6">
+                <a href="{{ path('app_donations_list_index') }}" class="btn btn-secondary btn-block">
+                    <i class="fas fa-arrow-left"></i> Back to list
+                </a>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-6">
+                <form action="{{ path('app_donations_delete', {'id': donations_list.id}) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ donations_list.id) }}">
+                    <button type="submit" class="btn btn-danger btn-block">
+                        <i class="fas fa-trash-alt"></i> Delete
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

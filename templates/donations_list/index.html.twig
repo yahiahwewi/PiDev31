@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DonationsList{% endblock %}
+
+{% block body %}
+    {% block header %}
+        {{ parent() }}
+    {% endblock %}
+    <h1 class="text-center mb-4">DonationsList</h1>
+
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="text-center">Id</th>
+                    <th class="text-center">Date</th>
+                    <th class="text-center">Montant</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for donations_list in donations_lists %}
+                <tr>
+                    <td class="text-center">{{ donations_list.id }}</td>
+                    <td class="text-center">{{ donations_list.date ? donations_list.date|date('Y-m-d') : '' }}</td>
+                    <td class="text-center">{{ donations_list.montant }}</td>
+                    <td class="text-center">
+                        <a href="{{ path('app_donations_list_show', {'id': donations_list.id}) }}" class="btn btn-primary">
+                            <i class="fas fa-eye"></i> 
+                        </a>
+                        <a href="{{ path('app_donations_list_edit', {'id': donations_list.id}) }}" class="btn btn-success">
+                            <i class="fas fa-edit"></i> 
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4" class="text-center">No records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container text-center mt-3">
+        <a href="{{ path('app_donations_list_new') }}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Create new Donation
+        </a>
+    </div>
+{% endblock %}

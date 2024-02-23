@@ -1,0 +1,26 @@
+{{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}, 'method': 'POST'}) }}
+    <div class="mb-3">
+        {{ form_row(form.donator_id_id) }}
+        {% if form_errors(form.donator_id_id) %}
+            <p class="text-danger">{{ form_errors(form.donator_id_id) }}</p>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        {{ form_row(form.date) }}
+        {% if form_errors(form.date) %}
+        <div class="invalid-feedback">>{{ form_errors(form.date) }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        {{ form_row(form.montant) }}
+        {% if form_errors(form.montant) %}
+            <div class="invalid-feedback">>{{ form_errors(form.montant) }}</div>
+        {% endif %}
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        <i class="fas fa-save"></i> {{ button_label }}
+    </button>
+{{ form_end(form) }}
