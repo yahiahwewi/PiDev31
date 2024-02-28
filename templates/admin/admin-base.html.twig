@@ -2,8 +2,9 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="utf-8">
+{% block head %} 
+
+ <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <title>Dashboard - NiceAdmin Bootstrap Template</title>
@@ -37,11 +38,12 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
-</head>
-
-<body>
+{% endblock %}
+{% block body %} 
 
   <!-- ======= Header ======= -->
+  {% block header %} 
+
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
@@ -269,6 +271,8 @@
     </nav><!-- End Icons Navigation -->
 
   </header><!-- End Header -->
+  {% endblock %} 
+
 
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
@@ -484,6 +488,8 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-login.html">
+       <a class="nav-link collapsed" href="{{ asset('/admin-login') }}">
+
           <i class="bi bi-box-arrow-in-right"></i>
           <span>Login</span>
         </a>
@@ -1184,6 +1190,8 @@
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
 
-</body>
+{% endblock %}
 
-</html>
+
+
+

@@ -3,10 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\AdminRepository;
+
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: AdminRepository::class)]
-class Admin
+class Admin implements UserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -22,11 +24,20 @@ class Admin
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+
+
+    public function eraseCredentials()
+    {
+        // Implement if you have any sensitive information that should be erased
+    }
     public function getId(): ?int
     {
         return $this->id;
     }
-
+    public function getUsername(): ?string
+    {
+        return $this->email;
+    }
     public function getEmail(): ?string
     {
         return $this->email;
@@ -50,6 +61,18 @@ class Admin
 
         return $this;
     }
+    public function getRoles(): array
+    {
+        // Implement logic to return user roles (e.g., ['ROLE_USER'])
+        return ['ROLE_ADMIN'];
+    }
+
+    public function getSalt(): ?string
+    {
+        // You can return null unless you are using a custom encoder
+        return null;
+    }
+
 
     public function getName(): ?string
     {
@@ -62,4 +85,16 @@ class Admin
 
         return $this;
     }
+    private $profileRoute;
+
+    public function getProfileRoute(): ?string
+    {
+        return $this->profileRoute;
+    }
+
+
+public function getUserIdentifier(): ?string
+{
+    return (string) $this->id;
+}
 }

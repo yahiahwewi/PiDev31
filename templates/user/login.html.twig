@@ -1,7 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends 'user/base.html.twig' %}
 
 {% block title %}Log in!{% endblock %}
 
+
+
+{% block body %}
 
       {% block header %}
         <div class="tm-main-content" id="top">
@@ -22,6 +25,11 @@
                                   <li class="nav-item">
                                     <a class="nav-link active" href="#top">Login <span class="sr-only">(current)</span></a>
                                 </li>
+                                 {# {% if app.user %}
+        <div class="mb-3">
+            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+        </div>
+    {% endif %} #}
                             </ul>
                         </div>                            
                     </nav>
@@ -31,21 +39,12 @@
 {% endblock %}
 
 
-{% block body %}
 <div class="card custom-card">
     <div class="card-body">
         <h5 class="card-title text-center">Login</h5>
 
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-        </div>
-    {% endif %}
+<form method="post">
 
     <label for="inputEmail">Email</label>
     <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>

@@ -29,6 +29,7 @@ security:
                 login_path: login
                 check_path: login
                 default_target_path: dashboard # Redirect after successful login
+                # default_target_path: app_security # Redirect after successful login
 
             # Lazy authentication initiation only when necessary
             lazy: true
@@ -38,7 +39,12 @@ security:
             # provider: users_in_memory
 
             # Custom authenticator for handling login logic
-            custom_authenticator: App\Security\LoginAuthenticator
+            custom_authenticator:
+                - App\Security\LoginAuthenticator
+                # - App\Security\AdminAuthAuthenticator
+                # - App\Security\AdminAuthenticator
+                # - App\Security\AdminAuthenticator
+
 
             # Specify the entry point for the firewall
             entry_point: App\Security\LoginAuthenticator
@@ -46,7 +52,7 @@ security:
             logout:
                 path: app_logout
                 # where to redirect after logout
-                target: login
+                target: app_login
 
             remember_me:
                 secret: '%kernel.secret%'
@@ -54,6 +60,18 @@ security:
                 path: /
                 always_remember_me: true
 
+    access_control:
+
+        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/edit-details/\d+, roles: ROLE_USER }
+        - { path: ^/edit-password/\d+, roles: ROLE_USER }
+        - { path: ^/edit-password/\d+, roles: ROLE_USER }
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+
+
+
+
+        # - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
 
     # access_control:
     #     - { path: '^/login$', roles: IS_AUTHENTICATED_ANONYMOUSLY }
