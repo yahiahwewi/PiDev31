@@ -13,18 +13,17 @@
         </div>
         <div class="form-group">
             <label for="image" class="form-label">Image URL</label>
-            {{ form_widget(form.image, {'attr': {'class': 'form-control', 'placeholder': 'Enter Image URL'}}) }}
+            {{ form_widget(form.image, {'attr': {'class': 'form-control', 'placeholder': 'Upload Ur image from here'}}) }}
             {{form_errors(form.image)}}
 
         </div>
-        <div class="form-group">
-            <label for="video" class="form-label">Video URL</label>
+        {# <div class="form-group">
+            <label for="video" class="form-label">Video </label>
             {{ form_widget(form.video, {'attr': {'class': 'form-control', 'placeholder': 'Enter Video URL'}}) }}
-        </div>
-        <button type="submit" class="btn btn-primary btn-custom">{{ button_label|default('Save') }}</button>
+        </div> #}
+        <button type="submit" class="btn btn-primary btn-block">{{ button_label|default('Save') }}</button>
     {{ form_end(form) }}
     <div class="form-hints">
-        <p class="hint-text">Hint: You can paste image or video URLs from your drive 'The Link Must Be Public'.</p>
         <p class="hint-text">Share With Us Your Thoughts!</p>
     </div>
 </div>

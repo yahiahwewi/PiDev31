@@ -6,43 +6,47 @@
     {% block header %}
         {{ parent() }}
     {% endblock %}
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header bg-primary text-white">
-                        <h1 class="card-title mb-0">Comment</h1>
-                    </div>
-                    <div class="card-body">
-                        <table class="table">
-                            <tbody>
-                                <tr>
-                                    <th>Id</th>
-                                    <td>{{ comment.id }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Content</th>
-                                    <td>{{ comment.content }}</td>
-                                </tr>
-                                <tr>
-                                    <th>User name</th>
-                                    <td>{{ username }}</td>
-                                </tr>
-                                <tr>
-                                    <th>CreatedAt</th>
-                                    <td>{{ comment.createdAt ? comment.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                                </tr>
-                                <tr>
-                                    <th>BlogPost title </th>
-                                    <td>{{ blogtitle }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="card-footer">
-                        <a href="{{ path('app_comment_index') }}" class="btn btn-secondary">Back to List</a>
-                        <a href="{{ path('app_comment_edit', {'id': comment.id}) }}" class="btn btn-primary">Edit</a>
-                        {{ include('comment/_delete_form.html.twig') }}
+    <div class="card custom-card-size rounded-3 shadow"> 
+        <div class="card-body">
+            <div class="container mt-4">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card custom-card">
+                            <div class="card-header bg-primary text-white py-3"> 
+                                <h2 class="card-title mb-0">Comment's Details</h2>
+                            </div>
+                            <div class="card-body">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th>Id</th>
+                                            <td>{{ comment.id }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Content</th>
+                                            <td>{{ comment.content }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>User name</th>
+                                            <td>{{ username }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>CreatedAt</th>
+                                            <td>{{ comment.createdAt ? comment.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>BlogPost title </th>
+                                            <td>{{ blogtitle }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="card-footer">
+                                <a href="{{ path('app_comment_index') }}" class="btn btn-secondary">Back to List</a>
+                                <a href="{{ path('app_comment_edit', {'id': comment.id}) }}" class="btn btn-primary">Edit</a>
+                                {{ include('comment/_delete_form.html.twig') }}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

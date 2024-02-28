@@ -29,7 +29,7 @@ class BlogPostType extends AbstractType
             ->add('content', null, [
                 'constraints' => [
                     new Assert\Length([
-                        'min' => 3,
+                        'min' => 20,
                         'minMessage' => 'The content should be at least {{ limit }} characters long',
                     ]),
                 ],
@@ -47,7 +47,7 @@ class BlogPostType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('video')
+            // ->add('video')
             // ->add('user', EntityType::class, [
             //     'class' => User::class,
             //     'choice_label' => 'name',

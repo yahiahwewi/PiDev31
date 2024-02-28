@@ -1,0 +1,7 @@
+{# _comment_form.html.twig #}
+<form id="comment-form" action="{{ path('app_commentbloc_new', {'id': blog_post.id}) }}" method="post">
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button type="submit" class="btn btn-primary">Submit</button>
+    {{ form_end(form) }}
+</form>

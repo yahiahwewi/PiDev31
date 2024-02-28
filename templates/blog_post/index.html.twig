@@ -9,56 +9,107 @@
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-10">
-                <div class="card">
-                    <div class="card-header bg-primary text-white">
-                        <h1 class="card-title mb-0">BlogPost Index</h1>
+                {% for blog_post in blog_posts %}
+                    <div class="card mb-3">
+                        <div class="card-header rd-primary text-black">
+                            <h5 class="card-title mb-0">{{ blog_post.title }}</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">{{ blog_post.content }}</p>
+                            <p class="card-text"><small class="text-muted">{{ blog_post.createdAt ? blog_post.createdAt|date('M d, Y') : '' }}</small></p>
+                        </div>
+                        <div class="card-boy">
                     </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Id</th>
-                                        <th scope="col">Title</th>
-                                        <th scope="col">Content</th>
-                                        <th scope="col">Created At</th>
-                                        <th scope="col">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for blog_post in blog_posts %}
-                                        <tr>
-                                            <td>{{ blog_post.id }}</td>
-                                            <td>{{ blog_post.title }}</td>
-                                            <td>{{ blog_post.content|slice(0, 100) }}</td>
-                                            <td>{{ blog_post.createdAt ? blog_post.createdAt|date('M d, Y') : '' }}</td>
-                                            <td>
-                                                <div class="d-flex">
-                                                    <a href="{{ path('app_blog_post_show', {'id': blog_post.id}) }}" class="btn btn-primary">Show</a>
-                                                    <a href="{{ path('app_blog_post_edit', {'id': blog_post.id}) }}" class="btn btn-secondary">Edit</a>
-                                                    <a href="{{ path('app_commentbloc_new', {'id': blog_post.id}) }}" class="btn btn-secondary">Comment</a>
-
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    {% else %}
-                                        <tr>
-                                            <td colspan="5">No records found</td>
-                                        </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
+                        <div id="comment-form-{{ blog_post.id }}" class="card mb-3" style="display: none;">
+                        <div class="card-body">
+                            {{ form_start(commentForms[blog_post.id]) }}
+                                {{ form_row(commentForms[blog_post.id].content) }}
+                                <button type="submit" class="btn btn-primary">add comment</button>
+                            {{ form_end(commentForms[blog_post.id]) }}
                         </div>
                     </div>
-                    <div class="card-footer">
-                        <div class="row mt-4">
-                            <div class="col-md-12 text-center">
-                                <a href="{{ path('app_blog_post_new') }}" class="btn btn-success btn-lg">Create New BlogPost</a>
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a href="{{ path('app_blog_post_show', {'id': blog_post.id}) }}" class="btn btn-primary btn-sm">Show</a>
+                                    <a href="{{ path('app_blog_post_edit', {'id': blog_post.id}) }}" class="btn btn-primary btn-sm">Edit</a>
+                                    <button class="btn btn-primary btn-sm toggle-comment-form" data-blog-post-id="{{ blog_post.id }}">Comment</button>
+                                </div>
+                                <small class="text-muted">{{ blog_post.id }}</small>
                             </div>
                         </div>
+                    </div>
+                    {# Render the form for creating a new comment #}
+                 
+                {% else %}
+                    <p>No records found</p>
+                {% endfor %}
+                <div class="row mt-4">
+                    <div class="col-md-12 text-center">
+                        <a href="{{ path('app_blog_post_new') }}" class="btn btn-primary btn-td">Create New Post</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+{# Pagination #}
+<div class="container mt-5">
+<div class="row justify-content-center">
+    <div class="text-center">
+        {{ knp_pagination_render(blog_posts) }}
+    </div>
+</div>
+</div>
+
+{# style of pagination #}
+<style>
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+}
+
+.pagination li {
+    margin: 0 5px;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+
+.button-container button {
+    margin-right: 10px; /* Espacement entre les boutons */
+}
+
+.pagination a {
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid #404a3d; /* Bleu */
+    border-radius: 3px;
+    color: #404a3d; /* Bleu */
+}
+
+.pagination a:hover {
+    background-color: #404a3d; /* Bleu au survol */
+    color: #fff; /* Texte blanc au survol */
+}
+</style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleButtons = document.querySelectorAll('.toggle-comment-form');
+            toggleButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    const blogPostId = this.dataset.blogPostId;
+                    const commentForm = document.getElementById('comment-form-' + blogPostId);
+                    commentForm.style.display = (commentForm.style.display === 'none') ? 'block' : 'none';
+                });
+            });
+        });
+    </script>
 {% endblock %}
