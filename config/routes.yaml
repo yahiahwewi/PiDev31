@@ -3,3 +3,27 @@
 #    controller: App\Controller\DefaultController::index
 import:
     resource: routes/annotations.yaml
+
+default_route:
+    path: /welcome
+    controller: App\Controller\SecurityController::index
+
+app_logout:
+    path: '/logout'
+    controller: App\Controller\SecurityController::logout
+
+app_login:
+    path: '/login'
+    controller: 'App\Controller\LoginController::login'
+
+
+edit_user:
+    path: '/edit-user/{id}'
+    controller: 'App\Controller\UserController::editProfile'
+
+
+not_found:
+    path: '/{catchall}'
+    controller: App\Controller\SecurityController::notfound
+    requirements:
+        catchall: '.*'

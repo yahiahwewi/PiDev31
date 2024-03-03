@@ -34,13 +34,7 @@ class RegistrationType extends AbstractType
                 new NotBlank(['message' => 'Le mot de passe ne peut pas être vide.']),
             ],
         ])
-        // ->add('confirmPassword', PasswordType::class, [
-        //     'constraints' => [
-        //         new Length(['min' => 5, 'minMessage' => 'Le mot de passe de confirmation doit comporter au moins {{ limit }} caractères.']),
-        //         new NotBlank(['message' => 'Le mot de passe de confirmation ne peut pas être vide.']),
-        //         new Callback([$this, 'validatePasswordConfirmation']),
-        //     ],
-        // ])
+     
         ->add('name', null, [
             'constraints' => [
                 new Length(['min' => 5, 'minMessage' => 'Le nom doit comporter au moins {{ limit }} caractères.']),
@@ -65,23 +59,10 @@ class RegistrationType extends AbstractType
                 new NotBlank(['message' => 'Le pays ne peut pas être vide.']),
             ],
         ]);
-            }
 
-    // public function validatePasswordConfirmation($value, ExecutionContextInterface $context): void
-    // {
-    //     $form = $context->getObject();
-    //     $data = $form->getData();
-    
-    //     $password = $data['password'] ?? null;
-    //     $confirmPassword = $data['confirmPassword'] ?? null;
-    
-    //     if ($password !== $confirmPassword) {
-    //         $context
-    //             ->buildViolation('The password and confirmation password should match.')
-    //             ->atPath('confirmPassword') // This is the field that the violation is related to
-    //             ->addViolation();
-    //     }
-    // }
+
+        
+            }
 
     public function configureOptions(OptionsResolver $resolver): void
     {

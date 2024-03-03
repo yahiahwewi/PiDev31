@@ -1,0 +1,45 @@
+{# templates/security/registration.html.twig #}
+
+{% extends 'user/base.html.twig' %}
+
+{% block title %}Registration{% endblock %}
+
+
+
+
+{% block body %}
+      <header>
+    {% block header %}
+        {{ parent() }} {# This includes the content of the 'header' block from the base template #}
+    {% endblock %}    
+    </header>
+
+    
+<div class="container text-center mt-5 ">
+    <div class="row">
+        <div class="col-md-6 ">
+            <div class="custom-card bg-white">
+                <img src="{{ asset('img/donator.png') }}" class="img-fluid" alt="Donator Image" style="max-width: 150px;">
+                <div class="custom-card-body">
+                    <h5 class="card-title">Signup as a Donator</h5>
+                    <p class="card-text">Join us and contribute to a good cause as a donator.</p>
+                <a href="{{ path('donator_signup') }}" class="btn btn-primary">Signup</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="custom-card bg-white tm-bg-highlight">
+                <img src="{{ asset('img/association.png') }}" class="img-fluid" alt="Association Image" style="max-width: 150px;">
+                <div class="custom-card-body">
+                    <h5 class="card-title">Signup as a Responsible Association</h5>
+                    <p class="card-text">Register your association and make a positive impact on the community.</p>
+                <a href="{{ path('assoc_signup') }}" class="btn btn-primary">Signup</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

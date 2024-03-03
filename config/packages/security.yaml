@@ -1,47 +1,95 @@
 security:
     enable_authenticator_manager: true
-    # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
+
+    # Password Hashers Configuration
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
-    # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
+
+    # User Providers Configuration
     providers:
-        users_in_memory: { memory: null }
+        # In-memory user provider (for testing/development)
+        users_in_memory:
+            memory: ~
+
+        # Database-backed user provider (uncomment and adjust for your needs)
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+
+    # Firewalls Configuration
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
         main:
+        
             form_login:
                 login_path: login
                 check_path: login
                 default_target_path: dashboard # Redirect after successful login
-                
+                # default_target_path: app_security # Redirect after successful login
 
+            # Lazy authentication initiation only when necessary
             lazy: true
-            provider: users_in_memory
 
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#the-firewall
+            # Choose an appropriate user provider based on your configuration
+            provider: app_user_provider
+            # provider: users_in_memory
 
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
+            # Custom authenticator for handling login logic
+            custom_authenticator:
+                - App\Security\LoginAuthenticator
+                # - App\Security\AdminAuthAuthenticator
+                # - App\Security\AdminAuthenticator
+                # - App\Security\AdminAuthenticator
 
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
+
+            # Specify the entry point for the firewall
+            entry_point: App\Security\LoginAuthenticator
+
+            logout:
+                path: app_logout
+                # where to redirect after logout
+                target: app_login
+
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800
+                path: /
+                always_remember_me: true
+
     access_control:
-        - { path: ^/main, roles: ROLE_USER }
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
 
+        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/edit-details/\d+, roles: ROLE_USER }
+        - { path: ^/edit-password/\d+, roles: ROLE_USER }
+        - { path: ^/edit-password/\d+, roles: ROLE_USER }
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+
+
+
+
+        # - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+
+    # access_control:
+    #     - { path: '^/login$', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    #     - { path: '^/dashboard', roles: ROLE_USER }  # Adjust this based on your routes
+    #     - { path: '^/', roles: IS_AUTHENTICATED_FULLY }
+
+    # Access Control Configuration (Uncomment and modify as needed)
+    # access_control:
+    #     - { path: ^/main, roles: ROLE_USER }
+    #     - { path: ^/admin, roles: ROLE_ADMIN }
+    #     - { path: ^/profile, roles: ROLE_USER }
+
+# Configuration for the "test" environment
 when@test:
     security:
         password_hashers:
-            # By default, password hashers are resource intensive and take time. This is
-            # important to generate secure password hashes. In tests however, secure hashes
-            # are not important, waste resources and increase test times. The following
-            # reduces the work factor to the lowest possible values.
             Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
                 algorithm: auto
-                cost: 15 # Lowest possible value for bcrypt
-                time_cost: 3 # Lowest possible value for argon
+                cost: 15        # Lowest possible value for bcrypt
+                time_cost: 3    # Lowest possible value for argon
                 memory_cost: 10 # Lowest possible value for argon

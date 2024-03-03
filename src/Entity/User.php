@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -36,12 +37,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
 public function getUsername(): ?string
 {
-    return $this->name;
+    return $this->email;
 }
+  /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $profileRoute;
 
-public function getUserIdentifier():  ?string
+    public function getProfileRoute(): ?string
+    {
+        return $this->profileRoute;
+    }
+
+
+public function getUserIdentifier(): ?string
 {
-    return $this->id;
+    return (string) $this->id;
 }
 
 
@@ -65,7 +76,41 @@ public function getUserIdentifier():  ?string
     #[ORM\Column(length: 255)]
     private ?string $country = null;
 
-  
+    #[ORM\Column(length: 255)]
+    private ?string $role = null;
+
+    /**
+     * @Assert\EqualTo(propertyPath="plainPassword", message="The passwords do not match.")
+     */
+    private ?string $confirmPassword = null;
+
+
+    public function getConfirmPassword(): ?string
+    {
+        return $this->confirmPassword;
+    }
+
+    public function setConfirmPassword(?string $confirmPassword): self
+    {
+        $this->confirmPassword = $confirmPassword;
+
+        return $this;
+    }
+
+    // #[Assert\NotBlank(groups: ['registration'])]
+    private ?string $plainPassword = null;
+
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(?string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
 
 
     public function getId(): ?int
@@ -160,5 +205,17 @@ public function getUserIdentifier():  ?string
     public function eraseCredentials()
     {
         // Implement if you have any sensitive information that should be erased
+    }
+
+    public function getRole(): ?string
+    {
+        return $this->role;
+    }
+
+    public function setRole(string $role): static
+    {
+        $this->role = $role;
+
+        return $this;
     }
 }
