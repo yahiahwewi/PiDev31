@@ -11,6 +11,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType; // Import EntityType for user 
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints as Assert; // Import the Assert namespace for validation constraints
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 
 class BlogPostType extends AbstractType
@@ -24,6 +25,9 @@ class BlogPostType extends AbstractType
                         'min' => 3,
                         'minMessage' => 'The title should be at least {{ limit }} characters long',
                     ]),
+                    new NotBlank([
+                        'message' => 'The Title cannot be blank.',
+                    ]),
                 ],
             ])
             ->add('content', null, [
@@ -31,6 +35,9 @@ class BlogPostType extends AbstractType
                     new Assert\Length([
                         'min' => 20,
                         'minMessage' => 'The content should be at least {{ limit }} characters long',
+                    ]),
+                    new NotBlank([
+                        'message' => 'The Content cannot be blank.',
                     ]),
                 ],
             ])
@@ -41,7 +48,7 @@ class BlogPostType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new File([
-                        'maxSize' => '20048k',
+                        'maxSize' => '3000k',
                         'mimeTypes' => ['image/*'],
                         'mimeTypesMessage' => 'Please upload a valid image',
                     ]),

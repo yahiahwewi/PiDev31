@@ -1,7 +1,18 @@
 {# _comment_form.html.twig #}
 <form id="comment-form" action="{{ path('app_commentbloc_new', {'id': blog_post.id}) }}" method="post">
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
+{{ form_start(commentForms, {'attr': {novalidate:'novalidate'}}) }}
+    
+    <div class="mb-3">
+        {{ form_label(commentForms.content) }}
+        {{ form_widget(commentForms.content, {'attr': {'class': 'form-control'}}) }}
+
+
+        {# Display errors for the "content" field #}
+        {# {% if form_errors(commentForms.content) %}
+            <small class="text-danger">{{ form_errors(commentForms.content) }}</small>
+        {% endif %}  #}
+    </div>
+
     <button type="submit" class="btn btn-primary">Submit</button>
-    {{ form_end(form) }}
+    {{ form_end(commentForms) }}
 </form>

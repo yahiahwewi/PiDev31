@@ -17,7 +17,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Routing\Annotation\Route;
-
+use App\Form\BlogPostFilterType;
 
 #[Route('/blog/post')]
 class BlogPostController extends AbstractController
@@ -25,10 +25,28 @@ class BlogPostController extends AbstractController
     #[Route('/', name: 'app_blog_post_index', methods: ['GET'])]
     public function index(PaginatorInterface $paginator, BlogPostRepository $blogPostRepository, Request $request, CommentRepository $commentRepository): Response
     {
+        // Create the form for filtering
+        $filterForm = $this->createForm(BlogPostFilterType::class);
+        $filterForm->handleRequest($request);
+    
+        // Initialize the query builder to retrieve all blog posts
+        $queryBuilder = $blogPostRepository->createQueryBuilder('bp');
+    
+        // If the form is submitted and valid, get the form data
+        if ($filterForm->isSubmitted() && $filterForm->isValid()) {
+            $data = $filterForm->getData();
+            $filterBy = $data['filterBy'];
+    
+            // Filtering logic based on $filterBy
+            if ($filterBy === 'createdAt') {
+                $queryBuilder->orderBy('bp.createdAt', 'DESC');
+            } elseif ($filterBy === 'user') {
+                // Logic to filter by user
+            }
+        }
+    
         // Get all blog posts
-        $blogPosts = $blogPostRepository->findAll();
-        $comment= $commentRepository -> findAll();
-
+        $blogPosts = $queryBuilder->getQuery()->getResult();
     
         // Create an array to store comment forms for each blog post
         $commentForms = [];
@@ -56,21 +74,25 @@ class BlogPostController extends AbstractController
             3 // Posts per page
         );
     
-        // Render the Twig template with the paginated blog posts and comment forms
+        // Get all comments
+        $comments = $commentRepository->findAll();
+    
+        // Render the Twig template with the paginated blog posts, comment forms, and filter form
         return $this->render('blog_post/index.html.twig', [
             'blog_posts' => $pagination,
             'commentForms' => $commentForms, // Pass the comment forms to the template
-            'Comments' => $comment,
-
+            'comments' => $comments,
+            'filterForm' => $filterForm->createView(), // Pass the filter form to the template
         ]);
     }
+    
 
     #[Route('/new', name: 'app_blog_post_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager,UserRepository $user,SluggerInterface $slugger): Response
     {
 
         
-        $u=$user->find(2); // static use coz i signed up to add a user to work with  
+        $u=$user->find(1); // static use coz i signed up to add a user to work with  
         $blogPost = new BlogPost();
         $form = $this->createForm(BlogPostType::class, $blogPost);
         $form->handleRequest($request);

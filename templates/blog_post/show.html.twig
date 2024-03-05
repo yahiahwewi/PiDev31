@@ -25,7 +25,7 @@
 
                                     <dt class="col-sm-4">Content:</dt>
                                     <dd class="col-sm-8">{{ blog_post.content }}</dd>
-                                    <dt class="col-sm-4">username:</dt>
+                                    <dt class="col-sm-4">Username:</dt>
                                     <dd class="col-sm-8">{{ blog_post.user.name }}</dd>
 
                                     <dt class="col-sm-4">Created At:</dt>
@@ -43,7 +43,7 @@
                                         </dd>
                                     {% endif %} #}
 
-                                    <dt class="col-sm-4">comments</dt>
+                                    <dt class="col-sm-4">Comments</dt>
                                     <dd>
                                         {% for comment in Comments %}
                                             {% if comment.BlogPostId == blog_post.id %}
