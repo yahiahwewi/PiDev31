@@ -15,7 +15,7 @@ class SecurityController extends AbstractController
 {
 
 
-    #[Route('/', name: 'app_main')]
+    #[Route('/tunikind', name: 'app_main')]
     public function main(): Response
     {
         return $this->render('security/index.html.twig', [

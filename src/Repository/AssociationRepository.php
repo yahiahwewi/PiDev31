@@ -21,28 +21,57 @@ class AssociationRepository extends ServiceEntityRepository
         parent::__construct($registry, Association::class);
     }
 
-//    /**
-//     * @return Association[] Returns an array of Association objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * Recherche les associations par nom.
+     *
+     * @param string|null $searchTerm Le terme de recherche
+     * @return Association[] Les associations correspondant au terme de recherche
+     */
+    public function findBySearchTerm(?string $searchTerm): array
+    {
+        if (!$searchTerm) {
+            return $this->findAll();
+        }
 
-//    public function findOneBySomeField($value): ?Association
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        return $this->createQueryBuilder('a')
+            ->where('a.nom LIKE :searchTerm')
+            ->setParameter('searchTerm', '%'.$searchTerm.'%')
+            ->getQuery()
+            ->getResult();
+    }
+
+
+    public function findassociationbynom($nom)
+
+    {
+
+        return $this->createQueryBuilder('arb')
+
+            ->where('arb.nom LIKE :nom')
+
+            ->setParameter('nom', '%'.$nom.'%')
+
+            ->getQuery()
+
+            ->getResult();
+
+    } 
+
+    
+public function triass()
+{
+    return $this->createQueryBuilder('association')
+        ->orderBy('association.nom', 'ASC')
+        ->getQuery()
+        ->getResult();
+}
+
+
+public function trides()
+{
+    return $this->createQueryBuilder('association')
+        ->orderBy('association.nom', 'DESC')
+        ->getQuery()
+        ->getResult();
+}
 }

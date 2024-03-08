@@ -1,11 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin-base.html.twig' %}
 
 {% block title %}Association{% endblock %}
 
 {% block body %}
-    {% block header %}
-        {{ parent() }}
-    {% endblock %}
+
     <div class="card custom-card">
         <div class="card-body">
             <h1>Association</h1>
@@ -28,7 +26,8 @@
                         <th>Logo</th>
                         <td>
                             {% if association.logo %}
-                                <img src="{{ association.logo }}" alt="Logo de l'association">
+                            
+                            <td><img src="{{ asset('uploads/img/' ~ association.logo) }}" alt="" style="width: 70px" style="height:70px"></td>
                             {% else %}
                                 Aucun logo disponible
                             {% endif %}

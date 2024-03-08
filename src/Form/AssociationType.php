@@ -24,13 +24,12 @@ class AssociationType extends AbstractType
                     new Assert\NotBlank(),
                 ],
             ])
-            ->add('logo', FileType::class, [
-                'label' => 'Logo',
-                'required' => true, // Ensure logo is required
-                'constraints' => [
-                    new Assert\NotBlank(), // Ensure logo is not blank
-                ],
-            ])
+          
+
+            ->add('logo', FileType::class,['mapped'=>false, array('data_class' => null)])
+            ->add('logo', FileType::class, array('data_class' => null,'required' => false))
+
+            
                         ->add('siteweb', null, [
                 'constraints' => [
                     new Assert\Url(),

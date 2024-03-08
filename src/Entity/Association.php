@@ -54,17 +54,27 @@ class Association
         return $this;
     }
 
-    public function getLogo(): ?string
+    public function getLogo()
+
     {
+
         return $this->logo;
+
     }
 
-    public function setLogo(string $logo): static
+
+    public function setLogo( $logo)
+
     {
+
         $this->logo = $logo;
 
+
         return $this;
+
     }
+
+
 
     public function getSiteweb(): ?string
     {
@@ -76,5 +86,10 @@ class Association
         $this->siteweb = $siteweb;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getNom(); // Remplacez "getNom()" par la méthode qui retourne le nom de l'association
     }
 }

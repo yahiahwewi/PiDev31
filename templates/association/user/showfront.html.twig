@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Association{% endblock %}
+
+{% block body %}
+
+    <div class="card custom-card">
+        <div class="card-body">
+            <h1>Association</h1>
+
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Id</th>
+                        <td>{{ association.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nom</th>
+                        <td>{{ association.nom }}</td>
+                    </tr>
+                    <tr>
+                        <th>Description</th>
+                        <td>{{ association.description }}</td>
+                    </tr>
+                    <tr>
+                        <th>Logo</th>
+                        <td>
+                            {% if association.logo %}
+                            <td><img src="{{ asset('uploads/img/' ~ association.logo) }}" alt="" style="width: 70px" style="height:70px"></td>
+                            {% else %}
+                                Aucun logo disponible
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Siteweb</th>
+                        <td>{{ association.siteweb }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <a href="{{ path('app_associationfront_index') }}" class="btn btn-primary">Retour à la liste</a>
+
+
+        </div>
+    </div>
+{% endblock %}

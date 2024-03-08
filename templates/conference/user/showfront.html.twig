@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Conference{% endblock %}
+
+{% block body %}
+   
+    <div class="card custom-card">
+        <div class="card-body">
+            <h1>Conference</h1>
+
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Id</th>
+                        <td>{{ conference.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date</th>
+                            <td>{{ conference.date|date("Y-m-d") }}</td>
+                        </tr>
+                    <tr>
+                        <th>Lieu</th>
+                        <td>{{ conference.lieu }}</td>
+                    </tr>
+                    <tr>
+                        <th>Association</th>
+                        <td>{{ conference.association }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <a href="{{ path('app_conferencefront_index') }}" class="btn btn-primary">Retour à la liste</a>
+
+
+        </div>
+    </div>
+{% endblock %}
