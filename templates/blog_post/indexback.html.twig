@@ -1,12 +1,11 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin-base.html.twig' %}
 
 {% block title %}Blog Posts{% endblock %}
 
 {% block body %}
-    {% block header %}
-        {{ parent() }}
-    {% endblock %}
-    
+   
+<div class="section dashboard">
+
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-10">
@@ -33,8 +32,8 @@
                                     <h5 class="col-sm-4">Title:{{ blog_post.title }}</h5>
                                 </div>
                                 <div class="card-body">
-                                    <p class="card-text">{{ blog_post.content }}</p>
-                                     <dd class="col-sm-8"><img src="{{ asset('img/' ~ blog_post.image) }}" class="card-img-top" ></dd>
+                                    {# <p class="card-text">{{ blog_post.content }}</p> #}
+                                     {# <dd class="col-sm-8"><img src="{{ asset('img/' ~ blog_post.image) }}" class="card-img-top" ></dd> #}
 
                                     <p class="card-text"><small class="text-muted">{{ blog_post.createdAt ? blog_post.createdAt|date('M d, Y') : '' }}</small></p>
                                     
@@ -43,43 +42,17 @@
                                 <div class="card-footer">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <a href="{{ path('app_blog_post_show', {'id': blog_post.id}) }}" class="btn btn-info btn-sm">Show</a>
-                                            <a href="{{ path('app_blog_post_edit', {'id': blog_post.id}) }}" class="btn btn-info btn-sm">Edit</a>
-                                            <button class="btn btn-info btn-sm toggle-comment-form" data-blog-post-id="{{ blog_post.id }}">Comment</button>
+                                            <a href="{{ path('app_blog_post_showback', {'id': blog_post.id}) }}" class="btn btn-info btn-sm">Show</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div id="comment-form-{{ blog_post.id }}" class="card mt-3" style="display: none;">
-                                <div class="card-body">
-                                    {{ form_start(commentForms[blog_post.id],{'attr': {novalidate:'novalidate'}}) }}
-                                    <div class="mb-3">
-                                        {{ form_label(commentForms[blog_post.id].content) }}
-                                        {{ form_widget(commentForms[blog_post.id].content, {'attr': {'class': 'form-control'}}) }}
-                                    {# <small >{{ form_errors(commentForms[blog_post.id].content) }}</small> #}
-
-                                        {# Display errors for the "content" field #}
-                                        {# {% if form_errors(commentForms[blog_post.id].content) %}
-                                            <small >{{ form_errors(commentForms[blog_post.id].content) }}</small>
-                                        {% endif %} #}
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Comment</button>
-                                    {{ form_end(commentForms[blog_post.id]) }}
-                                </div>
-                            </div>
+                           
                         </div>
                     {% else %}
                         <p class="col-md-12 text-center">No records found</p>
                     {% endfor %}
-                    <div class="row mt-4">
-                        <div class="col-md-12 text-center">
-                            <a href="{{ path('app_blog_post_new') }}" class="btn btn-primary btn-lg rounded-pill px-5 py-3 shadow-sm hover-scale-up">
-                                <span class="d-flex align-items-center">
-                                    <i class="fas fa-pencil-alt me-2"></i> Create New Post
-                                </span>
-                            </a>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -93,6 +66,7 @@
             </div>
         </div>
     </div>
+</div>
 
     {# Style for Pagination #}
     <style>

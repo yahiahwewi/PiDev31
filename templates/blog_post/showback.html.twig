@@ -1,11 +1,11 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin-base.html.twig' %}
 
 {% block title %}View BlogPost{% endblock %}
 
 {% block body %}
-    {% block header %}
-        {{ parent() }}
-    {% endblock %}
+   
+    <div class="section dashboard">
+
     <div class="card custom-card-size rounded-3 shadow"> 
         <div class="card-body">
             <div class="container mt-4">
@@ -65,9 +65,9 @@
                                 </dl>
                             </div>
                             <div class="card-footer bg-light">
-                                <a href="{{ path('app_blog_post_index') }}" class="btn btn-primary btn-block">Back to List</a>
-                                <a href="{{ path('app_blog_post_edit', {'id': blog_post.id}) }}" class="btn btn-primary btn-block">Edit</a>
-                                {{ include('blog_post/_delete_form.html.twig') }}
+                                <a href="{{ path('app_blog_post_indexback') }}" class="btn btn-primary btn-block">Back to List</a>
+                                {# <a href="{{ path('app_blog_post_edit', {'id': blog_post.id}) }}" class="btn btn-primary btn-block">Edit</a> #}
+                                {{ include('blog_post/_deleteback_form.html.twig') }}
                             </div>
                         </div>
                     </div>
@@ -75,4 +75,5 @@
             </div>
         </div>
     </div>
+</div>
 {% endblock %}

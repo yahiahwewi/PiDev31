@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\BlogPostFilterType;
+use Dompdf\Dompdf;
 
 #[Route('/blog/post')]
 class BlogPostController extends AbstractController
@@ -138,13 +139,15 @@ class BlogPostController extends AbstractController
     }
 
     #[Route('/show/{id}', name: 'app_blog_post_show', methods: ['GET'])]
-    public function show(BlogPost $blogPost, CommentRepository $commentRepository): Response
+    public function show(BlogPost $blogPost, UserRepository $userRepository,CommentRepository $commentRepository): Response
     {
+        $user= $userRepository->findAll();
         $comment= $commentRepository -> findAll();
 
         return $this->render('blog_post/show.html.twig', [
             'blog_post' => $blogPost,
             'Comments' => $comment,
+            'users' => $user,
         ]);
     }
 
@@ -167,13 +170,140 @@ class BlogPostController extends AbstractController
     }
 
     #[Route('/delete/{id}', name: 'app_blog_post_delete', methods: ['POST'])]
-    public function delete(Request $request, BlogPost $blogPost, EntityManagerInterface $entityManager): Response
+    public function delete($id,Request $request,CommentRepository $commentRepository,BlogPostRepository $blogPostRepository, BlogPost $blogPost, EntityManagerInterface $entityManager): Response
     {
+
+        $comments=$commentRepository->findAll();
         if ($this->isCsrfTokenValid('delete'.$blogPost->getId(), $request->request->get('_token'))) {
+            foreach($comments as $comment)
+            {
+                if($comment->getBlogPostId()==$id)
+                {
+                    $comment->setBlogPostId(0);
+                }
+
+            }
             $entityManager->remove($blogPost);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('app_blog_post_index', [], Response::HTTP_SEE_OTHER);
     }
+    //partie back office
+
+
+
+    #[Route('/pdf', name: 'pdfbohmid', methods: ['GET'])]
+    public function index_pdf(BlogPostRepository $blogPostRepository, Request $request): Response
+    {
+        // Création d'une nouvelle instance de la classe Dompdf
+        $dompdf = new Dompdf();
+
+        // Récupération des top 3 commandes par total price
+        $blogposts = $blogPostRepository->findAll();
+        $imagePath = $this->getParameter('kernel.project_dir') . '/public/img/1.jpg';
+        // Encode the image to base64
+        $imageData = base64_encode(file_get_contents($imagePath));
+        $imageSrc = 'data:image/jpeg;base64,' . $imageData;
+        // Génération du HTML à partir du template Twig 'commande/pdf_file.html.twig' en passant les top 3 commandes
+        $html = $this->renderView('blog_post/pdf_file.html.twig', [
+            'blogposts' => $blogposts,
+            'imagePath' => $imageSrc,
+        ]);
+
+        // Récupération des options de Dompdf et activation du chargement des ressources à distance
+        $options = $dompdf->getOptions();
+        $options->set([
+            'isHtml5ParserEnabled' => true,
+            'isPhpEnabled' => true,  // Enable PHP rendering
+        ]);
+
+        $dompdf->setOptions($options);
+
+        // Chargement du HTML généré dans Dompdf
+        $dompdf->loadHtml($html);
+
+        // Configuration du format de la page en A4 en mode portrait
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Génération du PDF
+        $dompdf->render();
+
+        // Récupération du contenu du PDF généré
+        $output = $dompdf->output();
+
+        // Set headers for PDF download
+        $response = new Response($output, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="archive.pdf"',
+        ]);
+
+        return $response;
+    }
+
+
+    #[Route('/back', name: 'app_blog_post_indexback', methods: ['GET'])]
+    public function indexback(PaginatorInterface $paginator, BlogPostRepository $blogPostRepository, Request $request, CommentRepository $commentRepository): Response
+    {
+        // Create the form for filtering
+        
+        $blogPosts=$blogPostRepository->findAll();
+        // Paginate the list of blog posts
+        $pagination = $paginator->paginate(
+            $blogPosts,
+            $request->query->getInt('page', 1), // Current page
+            3 // Posts per page
+        );
+    
+        // Get all comments
+        $comments = $commentRepository->findAll();
+    
+        // Render the Twig template with the paginated blog posts, comment forms, and filter form
+        return $this->render('blog_post/indexback.html.twig', [
+            'blog_posts' => $pagination,
+            'comments' => $comments,
+        ]);
+    }
+
+
+
+
+    #[Route('/show/back/{id}', name: 'app_blog_post_showback', methods: ['GET'])]
+    public function showback(BlogPost $blogPost, UserRepository $userRepository,CommentRepository $commentRepository): Response
+    {
+        $user= $userRepository->findAll();
+        $comment= $commentRepository -> findAll();
+
+        return $this->render('blog_post/showback.html.twig', [
+            'blog_post' => $blogPost,
+            'Comments' => $comment,
+            'users' => $user,
+        ]);
+    }
+
+
+
+
+    #[Route('/delete/back/{id}', name: 'app_blog_post_deleteback', methods: ['POST'])]
+    public function deleteback($id,Request $request,CommentRepository $commentRepository,BlogPostRepository $blogPostRepository, BlogPost $blogPost, EntityManagerInterface $entityManager): Response
+    {
+
+        $comments=$commentRepository->findAll();
+        if ($this->isCsrfTokenValid('delete'.$blogPost->getId(), $request->request->get('_token'))) {
+            foreach($comments as $comment)
+            {
+                if($comment->getBlogPostId()==$id)
+                {
+                    $comment->setBlogPostId(0);
+                }
+
+            }
+            $entityManager->remove($blogPost);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_blog_post_indexback', [], Response::HTTP_SEE_OTHER);
+    }
+
+    //partie back office
 }
