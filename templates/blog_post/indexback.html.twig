@@ -1,111 +1,128 @@
 {% extends 'admin-base.html.twig' %}
 
-{% block title %}Blog Posts{% endblock %}
+{% block title %}Blog Posts
+{% endblock %}
 
 {% block body %}
-   
-<div class="section dashboard">
 
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-10">
-                {# Filter Form #}
-                {% if form is defined %}
-                {{ form_start(form) }}
-                    {{ form_row(form.filterBy) }}
-                <button type="submit" class="btn btn-primary">Filter</button>
-                {{ form_end(form) }}
-                {% endif %}
-            </div>
-        </div>
-    </div>
+	<div class="section dashboard">
 
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-10">
-                <div class="row">
-                    {% for blog_post in blog_posts %}
-                        <div class="col-md-12 mb-4">
-                            <div class="card">
-                                <div class="card-header bg-primary text-white">
-                                     <dt class="card-title mb-0">{{ blog_post.user.name }}</dt>
-                                    <h5 class="col-sm-4">Title:{{ blog_post.title }}</h5>
-                                </div>
-                                <div class="card-body">
-                                    {# <p class="card-text">{{ blog_post.content }}</p> #}
-                                     {# <dd class="col-sm-8"><img src="{{ asset('img/' ~ blog_post.image) }}" class="card-img-top" ></dd> #}
+		<div class="container mt-5">
+			<div class="row justify-content-center">
+				<div class="col-md-10">
+					<div class="btn-group">
+						<a href="{{ path('top_blogs') }}" class="btn btn-info btn-sm">
+							<i class="bi bi-1"></i>
+							<!-- Icon representing the number 1 -->
+							Top Blogs
+						</a>
+					</div>
 
-                                    <p class="card-text"><small class="text-muted">{{ blog_post.createdAt ? blog_post.createdAt|date('M d, Y') : '' }}</small></p>
-                                    
-                                </div>
-                            
-                                <div class="card-footer">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <a href="{{ path('app_blog_post_showback', {'id': blog_post.id}) }}" class="btn btn-info btn-sm">Show</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                           
-                        </div>
-                    {% else %}
-                        <p class="col-md-12 text-center">No records found</p>
-                    {% endfor %}
-                    
-                </div>
-            </div>
-        </div>
-    </div>
+					{# Filter Form #}
+					{% if form is defined %}
+						{{ form_start(form) }}
+						{{ form_row(form.filterBy) }}
+						<button type="submit" class="btn btn-primary">Filter</button>
+						{{ form_end(form) }}
+					{% endif %}
+				</div>
+			</div>
+		</div>
 
-    {# Pagination #}
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-12 text-center">
-                {{ knp_pagination_render(blog_posts) }}
-            </div>
-        </div>
-    </div>
-</div>
+		<div class="container mt-5">
+			<div class="row justify-content-center">
+				<div class="col-md-10">
+					<div class="row">
+						{% for blog_post in blog_posts %}
+							<div class="col-md-12 mb-4">
+								<div class="card">
+									<div class="card-header bg-primary text-white">
+										<dt class="card-title mb-0">{{ blog_post.user.name }}</dt>
+										<h5 class="col-sm-4">Title:{{ blog_post.title }}</h5>
+									</div>
+									<div class="card-body">
+										{# <p class="card-text">{{ blog_post.content }}</p> #}
+										{# <dd class="col-sm-8"><img src="{{ asset('img/' ~ blog_post.image) }}" class="card-img-top" ></dd> #}
 
-    {# Style for Pagination #}
-    <style>
-        .pagination {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-            padding: 0;
-        }
+											<p class="card-text"> <small class="text-muted">{{ blog_post.createdAt ? blog_post.createdAt|date('M d, Y') : '' }}</small>
+										</p>
 
-        .pagination li {
-            margin: 0 5px;
-        }
+									</div>
 
-        .pagination a {
-            text-decoration: none;
-            padding: 5px 10px;
-            border: 1px solid #007bff; /* Blue */
-            border-radius: 3px;
-            color: #007bff; /* Blue */
-        }
+									<div class="card-footer">
+										<div class="d-flex justify-content-between align-items-center">
+											<div class="btn-group">
+												<a href="{{ path('app_blog_post_showback', {'id': blog_post.id}) }}" class="btn btn-info btn-sm">Show</a>
+											</div>
+										</div>
+									</div>
+								</div>
 
-        .pagination a:hover {
-            background-color: #007bff; /* Blue hover */
-            color: #fff; /* White text hover */
-        }
-    </style>
+							</div>
+						{% else %}
+							<p class="col-md-12 text-center">No records found</p>
+						{% endfor %}
+						<div class="btn-group">
+							<a href="{{ path('pdfbohmid') }}" class="btn btn-info btn-sm">
+								<i class="bi bi-file-pdf"></i>
+								Archiver
+							</a>
+						</div>
 
-    {# JavaScript for toggling comment form #}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const toggleButtons = document.querySelectorAll('.toggle-comment-form');
-            toggleButtons.forEach(function(button) {
-                button.addEventListener('click', function() {
-                    const blogPostId = this.dataset.blogPostId;
-                    const commentForm = document.getElementById('comment-form-' + blogPostId);
-                    commentForm.style.display = (commentForm.style.display === 'none') ? 'block' : 'none';
-                });
-            });
-        });
-    </script>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{# Pagination #}
+		<div class="container mt-5">
+			<div class="row justify-content-center">
+				<div class="col-md-12 text-center">
+					{{ knp_pagination_render(blog_posts) }}
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{# Style for Pagination #}
+	<style>
+		.pagination {
+			display: flex;
+			justify-content: center;
+			list-style: none;
+			padding: 0;
+		}
+
+		.pagination li {
+			margin: 0 5px;
+		}
+
+		.pagination a {
+			text-decoration: none;
+			padding: 5px 10px;
+			border: 1px solid #007bff; /* Blue */
+			border-radius: 3px;
+			color: #007bff; /* Blue */
+		}
+
+		.pagination a:hover {
+			background-color: #007bff; /* Blue hover */
+			color: #fff; /* White text hover */
+		}
+	</style>
+
+	{# JavaScript for toggling comment form #}
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+const toggleButtons = document.querySelectorAll('.toggle-comment-form');
+toggleButtons.forEach(function (button) {
+button.addEventListener('click', function () {
+const blogPostId = this.dataset.blogPostId;
+const commentForm = document.getElementById('comment-form-' + blogPostId);
+commentForm.style.display = (commentForm.style.display === 'none') ? 'block' : 'none';
+});
+});
+});
+	</script>
 {% endblock %}

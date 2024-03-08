@@ -1,137 +1,165 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Blog Posts{% endblock %}
+{% block title %}Blog Posts
+{% endblock %}
 
 {% block body %}
-    {% block header %}
-        {{ parent() }}
-    {% endblock %}
-    
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-10">
-                {# Filter Form #}
-                {% if form is defined %}
-                {{ form_start(form) }}
-                    {{ form_row(form.filterBy) }}
-                <button type="submit" class="btn btn-primary">Filter</button>
-                {{ form_end(form) }}
-                {% endif %}
-            </div>
-        </div>
-    </div>
+	{% block header %}
+		{{ parent() }}
+	{% endblock %}
 
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-10">
-                <div class="row">
-                    {% for blog_post in blog_posts %}
-                        <div class="col-md-12 mb-4">
-                            <div class="card">
-                                <div class="card-header bg-primary text-white">
-                                     <dt class="card-title mb-0">{{ blog_post.user.name }}</dt>
-                                    <h5 class="col-sm-4">Title:{{ blog_post.title }}</h5>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text">{{ blog_post.content }}</p>
-                                     <dd class="col-sm-8"><img src="{{ asset('img/' ~ blog_post.image) }}" class="card-img-top" ></dd>
+	<div class="container mt-5">
+		<div class="row justify-content-center">
+			<div
+				class="col-md-10">
+				{# Filter Form #}
+				{% if form is defined %}
+					{{ form_start(form) }}
+					{{ form_row(form.filterBy) }}
+					<button type="submit" class="btn btn-primary">Filter</button>
+					{{ form_end(form) }}
+				{% endif %}
+			</div>
+		</div>
+	</div>
 
-                                    <p class="card-text"><small class="text-muted">{{ blog_post.createdAt ? blog_post.createdAt|date('M d, Y') : '' }}</small></p>
-                                    
-                                </div>
-                            
-                                <div class="card-footer">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <a href="{{ path('app_blog_post_show', {'id': blog_post.id}) }}" class="btn btn-info btn-sm">Show</a>
-                                            <a href="{{ path('app_blog_post_edit', {'id': blog_post.id}) }}" class="btn btn-info btn-sm">Edit</a>
-                                            <button class="btn btn-info btn-sm toggle-comment-form" data-blog-post-id="{{ blog_post.id }}">Comment</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="comment-form-{{ blog_post.id }}" class="card mt-3" style="display: none;">
-                                <div class="card-body">
-                                    {{ form_start(commentForms[blog_post.id],{'attr': {novalidate:'novalidate'}}) }}
-                                    <div class="mb-3">
-                                        {{ form_label(commentForms[blog_post.id].content) }}
-                                        {{ form_widget(commentForms[blog_post.id].content, {'attr': {'class': 'form-control'}}) }}
-                                    {# <small >{{ form_errors(commentForms[blog_post.id].content) }}</small> #}
+	<div class="container mt-5">
+		<div class="row justify-content-center">
+			<div class="col-md-10">
+				<div class="row">
+					{% for blog_post in blog_posts %}
+						{# {% if blog_post.getLikes()-blog_post.getDislikes()>-2 %} #}
 
-                                        {# Display errors for the "content" field #}
-                                        {# {% if form_errors(commentForms[blog_post.id].content) %}
-                                            <small >{{ form_errors(commentForms[blog_post.id].content) }}</small>
-                                        {% endif %} #}
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Comment</button>
-                                    {{ form_end(commentForms[blog_post.id]) }}
-                                </div>
-                            </div>
-                        </div>
-                    {% else %}
-                        <p class="col-md-12 text-center">No records found</p>
-                    {% endfor %}
-                    <div class="row mt-4">
-                        <div class="col-md-12 text-center">
-                            <a href="{{ path('app_blog_post_new') }}" class="btn btn-primary btn-lg rounded-pill px-5 py-3 shadow-sm hover-scale-up">
-                                <span class="d-flex align-items-center">
-                                    <i class="fas fa-pencil-alt me-2"></i> Create New Post
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+						<div class="col-md-12 mb-4">
+							<div class="card">
+								<div class="card-header bg-primary text-white">
+									<dt class="card-title mb-0">{{ blog_post.user.name }}</dt>
+									<h5 class="col-sm-4">{{ blog_post.title }}</h5>
+								</div>
+								<div class="card-body">
+									<p class="card-text">{{ blog_post.content }}</p>
+									<dd class="col-sm-8"><img src="{{ asset('img/' ~ blog_post.image) }}" class="card-img-top"></dd>
 
-    {# Pagination #}
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-12 text-center">
-                {{ knp_pagination_render(blog_posts) }}
-            </div>
-        </div>
-    </div>
+									<p class="card-text">
+										<small class="text-muted">{{ blog_post.createdAt ? blog_post.createdAt|date('M d, Y') : '' }}</small>
+									</p>
 
-    {# Style for Pagination #}
-    <style>
-        .pagination {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-            padding: 0;
-        }
+								</div>
 
-        .pagination li {
-            margin: 0 5px;
-        }
+								<div class="card-footer">
+									<div class="d-flex justify-content-between align-items-center">
+										<div class="btn-group">
+											<a href="{{ path('app_blog_post_show', {'id': blog_post.id}) }}" class="btn btn-success rounded-pill py-2 px-4">
+												<i class="fa fa-eye ">{{ blog_post.nbVue }}</i>
+											</a>
+											{% if app.user.id == blog_post.user.id %}
+												<a href="{{ path('app_blog_post_edit', {'id': blog_post.id}) }}" class="btn btn-info btn-sm">Edit</a>
 
-        .pagination a {
-            text-decoration: none;
-            padding: 5px 10px;
-            border: 1px solid #007bff; /* Blue */
-            border-radius: 3px;
-            color: #007bff; /* Blue */
-        }
 
-        .pagination a:hover {
-            background-color: #007bff; /* Blue hover */
-            color: #fff; /* White text hover */
-        }
-    </style>
+											{% endif %}
+											<button class="btn btn-info btn-sm toggle-comment-form" data-blog-post-id="{{ blog_post.id }}">Comment</button>
+											<a href="{{ path('dislike', {'id': blog_post.id}) }}" class="btn btn-danger rounded-pill py-2 px-4">
+												<i class="fa fa-thumbs-down"></i>
+												Dislike
+												{{ blog_post.dislikes }}
+											</a>
 
-    {# JavaScript for toggling comment form #}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const toggleButtons = document.querySelectorAll('.toggle-comment-form');
-            toggleButtons.forEach(function(button) {
-                button.addEventListener('click', function() {
-                    const blogPostId = this.dataset.blogPostId;
-                    const commentForm = document.getElementById('comment-form-' + blogPostId);
-                    commentForm.style.display = (commentForm.style.display === 'none') ? 'block' : 'none';
-                });
-            });
-        });
-    </script>
+											<a href="{{ path('like', {'id': blog_post.id}) }}" class="btn btn-success rounded-pill py-2 px-4">
+												<i class="fa fa-thumbs-up"></i>
+												Like
+												{{ blog_post.likes }}
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div id="comment-form-{{ blog_post.id }}" class="card mt-3" style="display: none;">
+								<div class="card-body">
+									{{ form_start(commentForms[blog_post.id],{'attr': {novalidate:'novalidate'}}) }}
+									<div class="mb-3">
+										{{ form_label(commentForms[blog_post.id].content) }}
+										{{ form_widget(commentForms[blog_post.id].content, {'attr': {'class': 'form-control'}}) }}
+									{# <small >{{ form_errors(commentForms[blog_post.id].content) }}</small> #}
+
+										{# Display errors for the "content" field #}
+										{# {% if form_errors(commentForms[blog_post.id].content) %}
+																															                                            <small >{{ form_errors(commentForms[blog_post.id].content) }}</small>
+																															                                        {% endif %} #}
+									</div>
+									<button type="submit" class="btn btn-primary">Comment</button>
+									{{ form_end(commentForms[blog_post.id]) }}
+
+								</div>
+
+							</div>
+						</div>
+						{# {% endif %} #}
+
+					{% else %}
+						<p class="col-md-12 text-center">No records found</p>
+					{% endfor %}
+					<div class="row mt-4">
+						<div class="col-md-12 text-center">
+							<a href="{{ path('app_blog_post_new') }}" class="btn btn-primary btn-lg rounded-pill px-5 py-3 shadow-sm hover-scale-up">
+								<span class="d-flex align-items-center">
+									<i class="fas fa-pencil-alt me-2"></i>
+									Create New Post
+								</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{# Pagination #}
+	<div class="container mt-5">
+		<div class="row justify-content-center">
+			<div class="col-md-12 text-center">
+				{{ knp_pagination_render(blog_posts) }}
+			</div>
+		</div>
+	</div>
+
+	{# Style for Pagination #}
+	<style>
+		.pagination {
+			display: flex;
+			justify-content: center;
+			list-style: none;
+			padding: 0;
+		}
+
+		.pagination li {
+			margin: 0 5px;
+		}
+
+		.pagination a {
+			text-decoration: none;
+			padding: 5px 10px;
+			border: 1px solid #007bff; /* Blue */
+			border-radius: 3px;
+			color: #007bff; /* Blue */
+		}
+
+		.pagination a:hover {
+			background-color: #007bff; /* Blue hover */
+			color: #fff; /* White text hover */
+		}
+	</style>
+
+	{# JavaScript for toggling comment form #}
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+const toggleButtons = document.querySelectorAll('.toggle-comment-form');
+toggleButtons.forEach(function (button) {
+button.addEventListener('click', function () {
+const blogPostId = this.dataset.blogPostId;
+const commentForm = document.getElementById('comment-form-' + blogPostId);
+commentForm.style.display = (commentForm.style.display === 'none') ? 'block' : 'none';
+});
+});
+});
+	</script>
 {% endblock %}

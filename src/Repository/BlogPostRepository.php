@@ -45,4 +45,22 @@ class BlogPostRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+public function findTopBlogs(): array
+{
+    $entityManager = $this->getEntityManager();
+
+    $query = $entityManager->createQuery(
+        'SELECT bp.id, bp.title, bp.content, COUNT(c.id) AS commentCount
+        FROM App\Entity\BlogPost bp
+        LEFT JOIN App\Entity\Comment c WITH c.BlogPost_id = bp
+        GROUP BY bp.id, bp.title, bp.content
+        ORDER BY commentCount DESC'
+    );
+
+    $query->setMaxResults(1); // Fetch top 3 blogs, adjust as needed
+
+    return $query->getResult();
+}
+
 }

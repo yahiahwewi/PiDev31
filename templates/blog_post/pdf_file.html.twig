@@ -15,7 +15,7 @@
 				background-size: cover;
 				background-position: center;
 				background-repeat: no-repeat;
-				color: white; /* Text color */
+				color: black; /* Text color */
 			}
 
 
@@ -84,19 +84,19 @@
 						{{ blogpost.id }}
 					</div>
 					<div class="card-body">
-						<h5 class="card-title">Total Price:
+						<h5 class="card-title">Blog Title:
 							{{ blogpost.title }}
-							TND</h5>
-						<p class="card-text">Total Quantity:
+							</h5>
+						<p class="card-text">Blog Content:
 							{{ blogpost.content }}</p>
-						<p class="card-text">Date Validation:
+						<p class="card-text">Date Creation:
 							{{ blogpost.createdAt ? blogpost.createdAt|date('Y-m-d') : '' }}</p>
 					</div>
 				</div>
 				<br>
 			{% endfor %}
-			<div class="footer">
-				Generated on:
+			<div class="footer" style="color : black ;">
+				Generated at:
 				{{ "now"|date("Y-m-d H:i:s") }}
 			</div>
 		</div>

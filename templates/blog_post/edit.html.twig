@@ -1,29 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit BlogPost{% endblock %}
+{% block title %}Edit BlogPost
+{% endblock %}
 
 {% block body %}
-    {% block header %}
-        {{ parent() }}
-    {% endblock %}
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card border-primary shadow-lg">
-                    <div class="card-header bg-primary text-white">
-                        <h2 class="card-title mb-0">Edit BlogPost</h2>
-                    </div>
-                    <div class="card-body">
-                        {{ include('blog_post/_form.html.twig', {'button_label': 'Update'}) }}
-                    </div>
-                    <div class="card-footer bg-light">
-                        <a href="{{ path('app_blog_post_index') }}" class="btn btn-primary btn-block">Back to List</a>
-                        {{ include('blog_post/_delete_form.html.twig') }}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	{% block header %}
+		{{ parent() }}
+	{% endblock %}
+	<div class="container mt-5">
+		<div class="row justify-content-center">
+			<div class="col-md-8">
+				<div class="card border-primary shadow-lg">
+					<div class="card-header bg-primary text-white">
+						<h2 class="card-title mb-0">Edit BlogPost</h2>
+					</div>
+					<div class="card-body">
+						{{ include('blog_post/_form.html.twig', {'button_label': 'Update'}) }}
+					</div>
+					<div class="card-footer bg-light">
+						<a href="{{ path('app_blog_post_index') }}" class="btn btn-primary btn-block">Back to List</a>
+						{{ include('blog_post/_delete_form.html.twig') }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-    
+
 {% endblock %}

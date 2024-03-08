@@ -33,6 +33,21 @@ class BlogPost
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $video = null;
 
+    #[ORM\Column]
+    private ?int $nbvue = 0;
+
+    public function getNbVue(): ?int
+    {
+        return $this->nbvue;
+    }
+
+    public function setNbVue(?int $nbvue): self
+    {
+        $this->nbvue = $nbvue;
+
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -108,5 +123,58 @@ class BlogPost
         $this->video = $video;
 
         return $this;
+    }
+    #[ORM\Column]
+    private ?int $likes = 0;
+   
+
+    #[ORM\Column]
+    private ?int $dislikes = 0;
+
+    public function getLikes(): int
+    {
+        return $this->likes;
+    }
+
+    public function setLikes(int $likes): void
+    {
+        $this->likes = $likes;
+    }
+
+    public function getDislikes(): int
+    {
+        return $this->dislikes;
+    }
+
+    public function setDislikes(int $dislikes): void
+    {
+        $this->dislikes = $dislikes;
+    }
+
+    public function incrementLikes(): void
+    {
+        $this->likes++;
+    }
+
+    public function incrementDislikes(): void
+    {
+        $this->dislikes++;
+    }
+    public function checkAndDeleteIfRequired(): bool
+    {
+        return $this->dislikes - $this->likes >= 2;
+    }
+
+    #[ORM\Column]
+    private ?int $bool = 0;
+
+    public function getBool(): int
+    {
+        return $this->bool;
+    }
+
+    public function setBool(int $bool): void
+    {
+        $this->bool = $bool;
     }
 }

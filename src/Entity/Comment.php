@@ -17,14 +17,16 @@ class Comment
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
-    #[ORM\Column]
-    private ?int $user_id = null;
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(name: "user_id", referencedColumnName: "id")]
+    private ?User $user_id = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column]
-    private ?int $BlogPost_id = null;
+    #[ORM\ManyToOne(targetEntity: BlogPost::class)]
+    #[ORM\JoinColumn(name: "blog_post_id", referencedColumnName: "id")]
+    private ?BlogPost $BlogPost_id = null;
 
     public function getId(): ?int
     {
@@ -43,12 +45,12 @@ class Comment
         return $this;
     }
 
-    public function getUserId(): ?int
+    public function getUserId(): ?User
     {
         return $this->user_id;
     }
 
-    public function setUserId(int $user_id): static
+    public function setUserId(User $user_id): static
     {
         $this->user_id = $user_id;
 
@@ -67,14 +69,21 @@ class Comment
         return $this;
     }
 
-    public function getBlogPostId(): ?int
+    public function getBlogPostId(): ?BlogPost
     {
         return $this->BlogPost_id;
     }
 
-    public function setBlogPostId(int $BlogPost_id): static
+    public function setBlogPostId(BlogPost $BlogPost_id): static
     {
         $this->BlogPost_id = $BlogPost_id;
+
+        return $this;
+    }
+
+    public function setblognull(): self
+    {
+        $this->BlogPost_id = Null;
 
         return $this;
     }

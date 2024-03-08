@@ -1,78 +1,80 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}View BlogPost{% endblock %}
+{% block title %}View BlogPost
+{% endblock %}
 
 {% block body %}
-    {% block header %}
-        {{ parent() }}
-    {% endblock %}
-    <div class="card custom-card-size rounded-3 shadow"> 
-        <div class="card-body">
-            <div class="container mt-4">
-                <div class="row justify-content-center">
-                    <div class="col-md-8">
-                        <div class="card custom-card">
-                            <div class="card-header bg-primary text-white py-3"> 
-                                <h2 class="card-title mb-0">Post's Details</h2>
-                            </div>
-                            <div class="card-body">
-                                <dl class="row">
-                                    <dt class="col-sm-4">ID:</dt>
-                                    <dd class="col-sm-8">{{ blog_post.id }}</dd>
+	{% block header %}
+		{{ parent() }}
+	{% endblock %}
+	<div class="card custom-card-size rounded-3 shadow">
+		<div class="card-body">
+			<div class="container mt-4">
+				<div class="row justify-content-center">
+					<div class="col-md-8">
+						<div class="card custom-card">
+							<div class="card-header bg-primary text-white py-3">
+								<h2 class="card-title mb-0">Post's Details</h2>
+							</div>
+							<div class="card-body">
+								<dl class="row">
+									<dt class="col-sm-4">ID:</dt>
+									<dd class="col-sm-8">{{ blog_post.id }}</dd>
 
-                                    <dt class="col-sm-4">Title:</dt>
-                                    <dd class="col-sm-8">{{ blog_post.title }}</dd>
+									<dt class="col-sm-4">Title:</dt>
+									<dd class="col-sm-8">{{ blog_post.title }}</dd>
 
-                                    <dt class="col-sm-4">Content:</dt>
-                                    <dd class="col-sm-8">{{ blog_post.content }}</dd>
-                                    <dt class="col-sm-4">Username:</dt>
-                                    <dd class="col-sm-8">{{ blog_post.user.name }}</dd>
+									<dt class="col-sm-4">Content:</dt>
+									<dd class="col-sm-8">{{ blog_post.content }}</dd>
+									<dt class="col-sm-4">Username:</dt>
+									<dd class="col-sm-8">{{ blog_post.user.name }}</dd>
 
-                                    <dt class="col-sm-4">Created At:</dt>
-                                    <dd class="col-sm-8">{{ blog_post.createdAt ? blog_post.createdAt|date('Y-m-d H:i:s') : '' }}</dd>
+									<dt class="col-sm-4">Created At:</dt>
+									<dd class="col-sm-8">{{ blog_post.createdAt ? blog_post.createdAt|date('Y-m-d H:i:s') : '' }}</dd>
 
-                                    <dt class="col-sm-4">Image:</dt>
-                                    <dd class="col-sm-8"><img src="{{ asset('img/' ~ blog_post.image) }}" class="card-img-top" alt="{{ blog_post.title }}"></dd>
+									<dt class="col-sm-4">Image:</dt>
+									<dd class="col-sm-8"><img src="{{ asset('img/' ~ blog_post.image) }}" class="card-img-top" alt="{{ blog_post.title }}"></dd>
 
-                                    {# {% if blog_post.video %}
-                                        <dt class="col-sm-4">Video:</dt>
-                                        <dd class="col-sm-8">
-                                            <div class="embed-responsive embed-responsive-16by9">
-                                                <iframe class="embed-responsive-item" src="{{ blog_post.video }}" allowfullscreen></iframe>
-                                            </div>
-                                        </dd>
-                                    {% endif %} #}
+									{# {% if blog_post.video %}
+									                                        <dt class="col-sm-4">Video:</dt>
+									                                        <dd class="col-sm-8">
+									                                            <div class="embed-responsive embed-responsive-16by9">
+									                                                <iframe class="embed-responsive-item" src="{{ blog_post.video }}" allowfullscreen></iframe>
+									                                            </div>
+									                                        </dd>
+									                                    {% endif %} #}
 
-                                    <dt class="col-sm-4">Comments</dt>
-                                    <dd>
-                                        {% for user in users %}
+									<dt class="col-sm-4">Comments</dt>
+									<dd>
+										{% for user in users %}
 
-                                        {% for comment in Comments %}
-                                        {% if comment.BlogPostId == blog_post.id %}
+											{% for comment in Comments %}
 
-                                            {% if user.id == comment.userId %}
-                                                {{ user.name }}:
+												{% if user.id == comment.userId.id %}
+													{{ user.name }}:
 
-                                                {{ comment.content }}
+													{{ comment.content }}
+													<br>
 
-                                                     {% endif %}
+												{% endif %}
+											{% endfor %}
 
-                                            {% endif %}
-                                        {% endfor %}
+										{% endfor %}
+									</dd>
+								</dl>
+							</div>
+							<div class="card-footer bg-light">
+								<a href="{{ path('app_blog_post_index') }}" class="btn btn-primary btn-block">Back to List</a>
+								{% if app.user.id == blog_post.user.id %}
 
-                                        {% endfor %}
-                                    </dd>
-                                </dl>
-                            </div>
-                            <div class="card-footer bg-light">
-                                <a href="{{ path('app_blog_post_index') }}" class="btn btn-primary btn-block">Back to List</a>
-                                <a href="{{ path('app_blog_post_edit', {'id': blog_post.id}) }}" class="btn btn-primary btn-block">Edit</a>
-                                {{ include('blog_post/_delete_form.html.twig') }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+									<a href="{{ path('app_blog_post_edit', {'id': blog_post.id}) }}" class="btn btn-primary btn-block">Edit</a>
+									{{ include('blog_post/_delete_form.html.twig') }}
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}

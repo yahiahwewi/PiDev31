@@ -12,6 +12,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
+
 
 #[Route('/comment')]
 class CommentController extends AbstractController
@@ -60,11 +62,12 @@ class CommentController extends AbstractController
 
 
     #[Route('/new/{id}', name: 'app_commentbloc_new', methods: ['GET', 'POST'])]
-    public function newcommforblog($id,Request $request, EntityManagerInterface $entityManager,BlogPostRepository $blogPostRepository, UserRepository $userRepository): Response
+    public function newcommforblog($id,Request $request,Security $security, EntityManagerInterface $entityManager,BlogPostRepository $blogPostRepository, UserRepository $userRepository): Response
     {
         $comment = new Comment();
-        // $blog=$blogPostRepository->find($id);
-        // $user=$userRepository->find(2);
+        $user=$security->getUser();
+         $blog=$blogPostRepository->find($id);
+        
 
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
@@ -77,13 +80,14 @@ class CommentController extends AbstractController
             $comment->setCreatedAt($createdAt);
             
 
-            $comment->setUserId(2);
-            $comment->setBlogPostId($id);
+            $comment->setUserId($user);
+            $comment->setBlogPostId($blog);
             $entityManager->persist($comment);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_blog_post_index', [], Response::HTTP_SEE_OTHER);
         }
+        $this->addFlash('success', 'Le commentaire a été ajouté avec succès.');
 
         return $this->renderForm('comment/new.html.twig', [
             'comment' => $comment,
@@ -119,6 +123,7 @@ class CommentController extends AbstractController
 
             return $this->redirectToRoute('app_comment_index', [], Response::HTTP_SEE_OTHER);
         }
+        $this->addFlash('success', 'Le commentaire a été modifié avec succès.');
 
         return $this->renderForm('comment/edit.html.twig', [
             'comment' => $comment,
@@ -133,6 +138,8 @@ class CommentController extends AbstractController
             $entityManager->remove($comment);
             $entityManager->flush();
         }
+
+        $this->addFlash('success', 'Le commentaire a été supprimé avec succès.');
 
         return $this->redirectToRoute('app_comment_index', [], Response::HTTP_SEE_OTHER);
     }

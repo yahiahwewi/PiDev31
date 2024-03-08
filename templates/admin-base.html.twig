@@ -46,7 +46,7 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="{{ path('app_list') }}" class="logo d-flex align-items-center">
+      {# <a href="{{ path('app_list') }}" class="logo d-flex align-items-center"> #}
 <img src="{{ asset('assets/img/logo1.png') }}" alt="">
         <span class="d-none d-lg-block">TuniKind</span>
       </a>
@@ -279,14 +279,14 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="{{ path('app_event_type_index') }}">
+        {# <a class="nav-link " href="{{ path('app_event_type_index') }}"> #}
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
       </li>
       <!-- End Dashboard Nav -->
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="{{ path('app_event_type_index') }}">
+        {# <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="{{ path('app_event_type_index') }}"> #}
           <i class="bi bi-menu-button-wide"></i><span>Gestion des événements </span>
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -363,7 +363,7 @@
         </ul>
       </li><!-- End Components Nav -->
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="{{ path('app_reservation_type_index') }}">
+        {# <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="{{ path('app_reservation_type_index') }}"> #}
           <i class="bi bi-journal-text"></i><span>Gestion des réservations</span>
         </a>
         <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -389,11 +389,23 @@
           </li>
         </ul>
       </li><!-- End Forms Nav -->
+<!-- Bohmid section -->
+      <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="{{ path('app_blog_post_indexback') }}">
+        <i class="bi bi-journal-text"></i><span>Gestion Blog Post</span>
+      </a>
+      <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="{{ path('calendrier') }}">
+    <i class="bi bi-journal-text"></i><span>Calendrier</span>
+  </a>
+    </li><!-- End Forms Nav -->
+<!-- Bohmid section -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="{{ path('app_list') }}">
+        {# <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="{{ path('app_list') }}"> #}
           <i class="bi bi-layout-text-window-reverse"></i><span>Phase Client</span>
+
         </a>
+
         <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
             <a href="tables-general.html">

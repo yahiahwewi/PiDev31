@@ -1,0 +1,61 @@
+{% extends 'admin-base.html.twig' %}
+{% block body %}
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Top Blogs</title>
+		<!-- Include necessary CSS and JavaScript libraries -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<h1>Top Blogs</h1>
+			<div class="row">
+				{% for blog in topBlogs %}
+					<div class="col-md-4 mb-4">
+						<div class="card">
+							<div class="card-body">
+								<h5 class="card-title">{{ blog.title }}</h5>
+								<br>
+								<p class="card-text">{{ blog.content }}</p>
+								<br>
+
+								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#blogModal{{ blog.id }}">
+									View Details
+								</button>
+							</div>
+						</div>
+					</div>
+
+					<!-- Modal -->
+					<div class="modal fade" id="blogModal{{ blog.id }}" tabindex="-1" role="dialog" aria-labelledby="blogModalLabel{{ blog.id }}" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="blogModalLabel{{ blog.id }}">{{ blog.title }}</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<p class="card-text">{{ blog.content }}</p>
+									<br>
+									<p class="card-text">Number of Comments:
+										{{ blog.commentCount }}</p>
+									<br>
+									<!-- Additional details or content can be displayed here -->
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</body>
+</html>{% endblock %}
