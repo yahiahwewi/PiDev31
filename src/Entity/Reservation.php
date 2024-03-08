@@ -16,13 +16,21 @@ class Reservation
     #[ORM\Column(length: 255)]
     #[Assert\Length(min:2)]
     #[Assert\Length(max:20)]
-    #[Assert\NotBlank (message:"veuillez saisir le nom de l'evenement ")]
+    #[Assert\NotBlank (message:"veuillez saisir votre nom ")]
+    #[Assert\Regex(
+        pattern: '/^\D*$/',
+        message: "LE NOM NE DOIT PAS CONTENIR DE NOMBRES."
+    )]
     private ?string $Nom = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\Length(min:1)]
     #[Assert\Length(max:20)]
-    #[Assert\NotBlank (message:"veuillez saisir le prénom de l'evenement ")]
+    #[Assert\Regex(
+        pattern: '/^\D*$/',
+        message: "LE PRENOM NE DOIT PAS CONTENIR DE NOMBRES."
+    )]
+    #[Assert\NotBlank (message:"veuillez saisir votre prénom  ")]
     private ?string $prenom = null;
 
     #[ORM\Column(length: 255)]
@@ -34,7 +42,7 @@ class Reservation
     #[Assert\Length(max:3)]
     #[Assert\Range(
         min: 16,
-        notInRangeMessage: "L'âge doit être de 16 ans ou plus.",
+        notInRangeMessage: "Votre âge doit être de 16 ans ou plus.",
     )]
     #[Assert\NotBlank (message:"veuillez saisir votre age ")]
     private ?int $age = null;

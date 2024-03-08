@@ -21,15 +21,11 @@ class Event
 
     #[ORM\Column(length: 255)]
     #[Assert\Length(min:2)]
-    #[Assert\Length(max:20)]
-    #[Assert\Regex(
-        pattern: '/^[A-Z\s]+$/',
-        message: "Le titre doit être composé uniquement de lettres majuscules."
-    )]
+    #[Assert\Length(max:40)]
     #[Assert\NotBlank (message:"veuillez saisir le titre de l'evenement ")]
     private ?string $Nom = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 10000)]
     #[Assert\NotBlank (message:"veuillez saisir la discription de l'evenement ")]
 
     #[Assert\Regex(

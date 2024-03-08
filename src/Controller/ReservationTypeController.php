@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Dompdf\Dompdf;
 
 #[Route('/reservation/type')]
 class ReservationTypeController extends AbstractController
@@ -43,7 +44,7 @@ class ReservationTypeController extends AbstractController
             $entityManager->persist($reservation);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_list', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_evenement_indexFront', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('reservation_type/new.html.twig', [
@@ -51,7 +52,75 @@ class ReservationTypeController extends AbstractController
             'form' => $form,
         ]);
     }
+    #[Route('/exportpdf', name: 'exportpdf')]
+    public function exportToPdf(ReservationRepository $reservationRepository): Response
+{
+    // Récupérer les données de matériel depuis votre base de données
+    $reservation = $reservationRepository->findAll();
 
+    // Créer le tableau de données pour le PDF
+    $tableData = [];
+    foreach ($reservation as $reservation) {
+        $tableData[] = [
+            'Nom' => $reservation->getNom(),
+            'prenom' => $reservation->getPrenom(),
+            'email' => $reservation->getEmail(),
+            'age' => $reservation->getAge(),
+            'motorise' => $reservation->isMotorise(),
+
+        ];
+    }
+
+    // Créer le PDF avec Dompdf
+    $dompdf=new Dompdf();
+    $html = $this->renderView('reservation_type/export-pdf.html.twig', [
+        'tableData' => $tableData,
+    ]);
+    $dompdf->loadHtml($html);
+    $dompdf->setPaper('A4', 'landscape');
+    $dompdf->render();
+
+    // Envoyer le PDF au navigateur
+    $response = new Response($dompdf->output(), 200, [
+        'Content-Type' => 'application/pdf',
+        'Content-Disposition' => 'attachment; filename="materiels.pdf"',
+    ]);
+    return $response;
+}
+
+    
+    #[Route('/stat', name: 'reservation_stat', methods: ['GET'])]
+    public function reservationStatistics(ReservationRepository $reservationRepository): Response
+    {
+        // Get all reservations from the repository
+        $reservations = $reservationRepository->findAll();
+    
+        // Initialize counts for motorized and non-motorized reservations
+        $motorizedCount = 0;
+        $nonMotorizedCount = 0;
+    
+        // Calculate statistics
+        foreach ($reservations as $reservation) {
+            // Check if the reservation is motorized or not
+            if ($reservation->isMotorise()) {
+                $motorizedCount++;
+            } else {
+                $nonMotorizedCount++;
+            }
+        }
+    
+        // Prepare statistics data
+        $statistics = [
+            'Motorized' => $motorizedCount,
+            'Non-Motorized' => $nonMotorizedCount,
+        ];
+    
+        // Render the template with statistics
+        return $this->render('reservation_type/statistics.html.twig', [
+            'statistics' => $statistics,
+        ]);
+    }
+    
     #[Route('/{id}', name: 'app_reservation_type_show', methods: ['GET'])]
     public function show(Reservation $reservation): Response
     {

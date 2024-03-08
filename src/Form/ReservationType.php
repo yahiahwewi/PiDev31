@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints as assert;
+use VictorPrdh\RecaptchaBundle\Form\ReCaptchaType;
 
 
 class ReservationType extends AbstractType
@@ -32,7 +33,8 @@ class ReservationType extends AbstractType
                 ],
                 'expanded' => true, // Renders as radio buttons
                 'multiple' => false, // Allows only one option to be selected
-            ]) ;
+            ]) 
+            ->add("recaptcha", ReCaptchaType::class);
             //->add('relation')        ;
     }
 

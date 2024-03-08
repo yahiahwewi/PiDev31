@@ -45,4 +45,13 @@ class EventRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function findByLibelle($query)
+{
+    return $this->createQueryBuilder('e')
+        ->andWhere('e.Nom LIKE :query')
+        ->setParameter('query', '%'.$query.'%')
+        ->getQuery()
+        ->getResult();
+}
+
 }

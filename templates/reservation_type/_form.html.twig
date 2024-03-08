@@ -58,6 +58,10 @@
         {% endif %}
     </div>
 </div>
+<div class="input-wrapper">
+    {{ form_row(form.recaptcha) }}
+    {{ form_errors(form.recaptcha) }}
+</div>
 
 {#
 <div class="form-group">

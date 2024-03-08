@@ -6,10 +6,15 @@ use App\Entity\Event;
 use App\Form\EventType;
 use App\Repository\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 #[Route('/event/type')]
 class EventTypeController extends AbstractController
@@ -32,8 +37,44 @@ class EventTypeController extends AbstractController
         ]);
     }
 
+    #[Route('/front', name: 'app_evenement_indexFront', methods: ['GET'])]
+    //public function indexFront(EventRepository $eventRepository,EntityManagerInterface $entityManager,Request $request,PaginatorInterface $paginator): Response
+   public function indexFront(EventRepository $eventRepository, EntityManagerInterface $entityManager, Request $request, PaginatorInterface $paginator): Response
+    {
+        // Retrieve all eve
+        $events = $entityManager
+            ->getRepository(Event::class)
+            ->findAll();
 
+        // Paginate the events
+        $pagination = $paginator->paginate(
+            $events, /* query NOT result */
+            $request->query->getInt('page', 1),4 // Number of items per page
+        );
 
+        // Render the template with the paginated events
+        return $this->render('event_type/list.html.twig', [
+            'events' => $pagination, // Pass the paginated data with the correct variable name
+        ]);
+    }
+
+    #[Route('/searchevent', name: 'searchevent')]
+    public function searchMateriel(Request $request, EventRepository $eventRepository): Response
+    {
+     $query = $request->query->get('query');
+     $events = [];
+
+        if ($query) {
+         $events = $eventRepository->findByLibelle($query);
+     } else {
+         $events = $eventRepository->findAll();
+     }
+
+     return $this->render('event_type/search.html.twig', [
+         'events' => $events,
+         'query' => $query,
+     ]);
+    }
     #[Route('/new', name: 'app_event_type_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -53,6 +94,19 @@ class EventTypeController extends AbstractController
             'form' => $form,
         ]);
     }
+    #[Route('/calendar', name: 'app_event_calendar')]
+    public function volCalendar(EventRepository $eventRepository): Response
+    {
+        // Fetch vols from the repository
+        $events = $eventRepository->findAll();
+
+        // Pass vols to the Twig template
+        return $this->render('event_type/agenda.html.twig', [
+            'events' => $events,
+        ]);
+    }
+ 
+
 
     #[Route('/{id}', name: 'app_event_type_show', methods: ['GET'])]
     public function show(Event $event): Response

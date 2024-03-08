@@ -39,5 +39,8 @@
         {% endfor %}
         </tbody>
     </table>
-<a href="{{ path('app_list') }}"> phase client </a>
+    <button class="btn btn-primary" onclick="location.href='{{ path('exportpdf') }}'">PDF</button>
+        <button class="btn btn-primary" onclick="location.href='{{ path('reservation_stat') }}'">Statistiques</button>
+
+
 {% endblock %}

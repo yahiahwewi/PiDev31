@@ -26,17 +26,10 @@
                         <th>Lieu</th>
                         <td>{{ event.Lieu }}</td>
                     </tr>
-                    <tr>
-                        <th>Nb_reservation</th>
-                        <td>{{ event.nbReservation }}</td>
-                    </tr>
-                    <tr>
-                        <th>Nb_places_dispo</th>
-                        <td>{{ event.nbPlacesDispo }}</td>
-                    </tr>
+                   
                 </tbody>
             </table>
-                        <a href="{{ path('app_list') }}" class="btn btn-primary">Return to list of events</a>
+                        <a href="{{ path('app_evenement_indexFront') }}" class="btn btn-primary">Return to list of events</a>
 
         </div>
     </div>

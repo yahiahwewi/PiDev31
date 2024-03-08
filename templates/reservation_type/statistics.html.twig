@@ -1,0 +1,50 @@
+{% extends 'admin-base.html.twig' %}
+
+{% block title %}Reservation Statistics{% endblock %}
+
+{% block body %}
+<div class="container mt-6">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-18 mb-10">
+      <div class="card text-center">
+        <div class="card-body">
+          <h1 class="card-title mb-4">Reservation Statistics by Motorization</h1>
+          <canvas id="myChartMotorization" style="height: 300px; width: 100%; margin-bottom: 20px;"></canvas>
+        </div>
+      </div>
+      <a href="{{ path('app_reservation_type_index') }}" class="btn btn-primary" style="color: #fff; margin-top: 20px;">Back to List</a>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  var ctxMotorization = document.getElementById('myChartMotorization').getContext('2d');
+  var myChartMotorization = new Chart(ctxMotorization, {
+    type: 'bar',
+    data: {
+      labels: ['Motorized', 'Non-Motorized'],
+      datasets: [{
+        label: 'Number of Reservations',
+        data: [{% for type, count in statistics %}
+                 {{ count }},
+               {% endfor %}],
+        backgroundColor: 'rgba(148, 87, 235, 0.8)',  // Violet
+        borderColor: 'rgba(148, 87, 235, 1)',       // Violet
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: false,
+      maintainAspectRatio: false,
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+</script>
+{% endblock %}
