@@ -1,22 +1,52 @@
 {% extends 'admin-base.html.twig' %}
 
-{% block title %}Edit Projects{% endblock %}
-
 {% block body %}
-    <div class="card custom-card">
-        <div class="card-body">
-    <h1>Edit Projects</h1>
-    <form action="{{ path('admin_projects_edit', {'id': project.id}) }}" method="post">
-        <div class="row justify-content-center mt-4">
-            <div class="col-md-6">
-                {{ include('projects/_form.html.twig', {'button_label': 'Update'}) }}
-            </div>
-        </div>
-    </form>
+    {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
 
-    
+    <div class="form-group">
+        <label for="form_date">title</label>
+        {{ form_errors(form.title) }}
+        {{ form_widget(form.title, {'attr': {'class': 'form-control', 'id': 'form_date'}}) }}
+    </div>
 
-    <a href="{{ path('admin_projects_index') }}">back to list</a>
+    <div class="form-group">
+        <label for="form_lieu">description</label>
+        {{ form_errors(form.description) }}
+        {{ form_widget(form.description, {'attr': {'class': 'form-control', 'id': 'form_lieu'}}) }}
+    </div>
 
-    {{ include('projects_admin/_delete_form.html.twig') }}
+    <div class="form-group">
+        <label for="form_lieu">amount</label>
+        {{ form_errors(form.amount) }}
+        {{ form_widget(form.amount, {'attr': {'class': 'form-control', 'id': 'form_lieu'}}) }}
+    </div>
+
+    <div class="form-group">
+        <label for="form_lieu">StartDate</label>
+        {{ form_errors(form.StartDate) }}
+        {{ form_widget(form.StartDate, {'attr': {'class': 'form-control', 'id': 'form_lieu'}}) }}
+    </div>
+
+    <div class="form-group">
+        <label for="form_lieu">EndDate</label>
+        {{ form_errors(form.EndDate) }}
+        {{ form_widget(form.EndDate, {'attr': {'class': 'form-control', 'id': 'form_lieu'}}) }}
+    </div>
+
+    <div class="form-group">
+        <label for="form_lieu">Status</label>
+        {{ form_errors(form.Status) }}
+        {{ form_widget(form.Status, {'attr': {'class': 'form-control', 'id': 'form_lieu'}}) }}
+    </div>
+       
+    </div>
+
+    {# Autres champs de formulaire... #}
+
+    <button type="submit" class="btn btn-primary">{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}
 {% endblock %}
+
+
+
+

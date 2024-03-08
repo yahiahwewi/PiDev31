@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\DonationsList;
 use App\Repository\DonationsListRepository;
+use App\Repository\ProjectsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -54,6 +55,49 @@ class FonctionController extends AbstractController
         // Output the generated PDF to Browser (inline view)
         $dompdf->stream("mypdf.pdf", [
             "Attachment" => false
+        ]);
+    }
+
+
+
+
+    
+ /**
+     * @Route("/stats", name="stats")
+     */
+    public function statistiques(ProjectsRepository $DonationsListRepository){
+        // On va chercher toutes les types
+        $menus = $DonationsListRepository->findAll();
+
+//Data Category
+        $foot = $DonationsListRepository->createQueryBuilder('a')
+            ->select('count(a.amount)')
+            ->Where('a.title= :title')
+            ->setParameter('title',"ecole")
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        $hand = $DonationsListRepository->createQueryBuilder('a')
+            ->select('count(a.amount)')
+            ->Where('a.title= :title')
+            ->setParameter('title',"faculte")
+            ->getQuery()
+            ->getSingleScalarResult();
+        $volley= $DonationsListRepository->createQueryBuilder('a')
+            ->select('count(a.amount)')
+            ->Where('a.title= :title')
+            ->setParameter('title',"lycee")
+            ->getQuery()
+            ->getSingleScalarResult();
+
+       
+
+        return $this->render('Stats/stats.html.twig', [
+            'nfoot' => $foot,
+            'nhand' => $hand,
+            'nvol' => $volley,
+
+
         ]);
     }
 

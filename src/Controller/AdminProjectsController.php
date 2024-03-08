@@ -70,7 +70,7 @@ class AdminProjectsController extends AbstractController
 
             $this->addFlash(
                 'upd',
-                'Added successfully!'
+                'updated successfully!'
             );
 
             return $this->redirectToRoute('admin_projects_index', [], Response::HTTP_SEE_OTHER);
@@ -91,7 +91,7 @@ class AdminProjectsController extends AbstractController
 
             $this->addFlash(
                 'del',
-                'Added successfully!'
+                'deleted successfully!'
             );
         }
 

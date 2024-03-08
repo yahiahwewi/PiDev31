@@ -49,7 +49,7 @@ class Projects
 
     
      #[ORM\Column(type :'string', length : 255)]
-     #[Assert\NotBlank]
+     #[Assert\NotBlank(message: "Please provide a status")]
   
     private $status;
 

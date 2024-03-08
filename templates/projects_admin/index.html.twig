@@ -26,13 +26,6 @@
     <div class="container">
         <h1 class="my-4">Projects</h1>
 
-    
-        <div class="row mb-4">
-            <div class="col-md-12">
-                <a href="{{ path('admin_projects_new') }}" class="btn btn-primary">Create New Project</a>
-            </div>
-        </div>
-
         <div class="row">
             <div class="col-md-12">
                 <table class="table table-striped">
@@ -60,8 +53,12 @@
                                     <td>{{ project.endDate ? project.endDate|date('Y-m-d') : '' }}</td>
                                     <td>{{ project.status }}</td>
                                     <td>
-                                        <a href="{{ path('admin_projects_show', {'id': project.id}) }}" class="btn btn-sm btn-info">Show</a>
-                                        <a href="{{ path('admin_projects_edit', {'id': project.id}) }}" class="btn btn-sm btn-warning">Edit</a>
+                                        <a href="{{ path('admin_projects_show', {'id': project.id}) }}" class="btn btn-sm btn-outline-primary me-2" title="Show Project">
+                                            <i class="fas fa-eye"></i> View
+                                        </a>
+                                        <a href="{{ path('admin_projects_edit', {'id': project.id}) }}" class="btn btn-sm btn-outline-secondary" title="Edit Project">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </a>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -75,7 +72,18 @@
             </div>
         </div>
     </div>
+    
+    
+    <div class="row mb-4">
+        <div class="col-md-12 text-center">
+            <a href="{{ path('admin_projects_new') }}" class="btn btn-primary">Create New Project</a>
+        </div>
+    </div>
+
     <span class="badge badge-sm bg-gradient"> <a href="{{ path('pdf') }}">PDF</a></span>
+    <br>
+    <span class="badge badge-sm bg-gradient"> <a href="{{ path('stats') }}">Statistiques</a></span>
+
 
 {% endblock %}
     
