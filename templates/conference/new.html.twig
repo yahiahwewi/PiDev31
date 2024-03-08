@@ -11,8 +11,8 @@
                 </div>
             </div>
 
-            <form method="post" enctype="multipart/form-data">
-{{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+            <form id="conference-form" method="post" enctype="multipart/form-data">
+                {{ form_start(form) }}
 
                 <div class="form-group">
                     <label for="form_date">Date</label>
@@ -36,4 +36,15 @@
             <a href="{{ path('app_conference_index') }}" class="btn btn-secondary">Back to list</a>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Supprimer les attributs required des champs de formulaire
+            var form = document.getElementById("conference-form");
+            var fields = form.querySelectorAll("[required]");
+            fields.forEach(function(field) {
+                field.removeAttribute("required");
+            });
+        });
+    </script>
 {% endblock %}

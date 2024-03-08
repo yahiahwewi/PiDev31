@@ -2,57 +2,41 @@
 
 {% block title %}Dashboard{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        /* Adjust the position of the photo */
+        .profile-photo {
+            margin-right: 10px; /* Adjust this value as needed */
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
+    {% block header %}
+        {{ parent() }}
+    {% endblock %}
     
     <div class="container">
         <h1 class="mt-4 mb-4">Dashboard</h1>
 
-
-         {% for message in app.flashes('info') %}
-                <div class="alert alert-success">
+        {% for message in app.flashes('info') %}
+            <div class="alert alert-success">
                 {{ message}}
-                </div>
-                {% endfor %}
+            </div>
+        {% endfor %}
 
-                {% for message in app.flashes('upd') %}
-                <div class="alert alert-warning">
+        {% for message in app.flashes('upd') %}
+            <div class="alert alert-warning">
                 {{ message}}
-                </div>
-                {% endfor %}
+            </div>
+        {% endfor %}
 
-                   {% for message in app.flashes('del') %}
-                <div class="alert alert-danger">
+        {% for message in app.flashes('del') %}
+            <div class="alert alert-danger">
                 {{ message}}
-                </div>
-                {% endfor %}
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            </div>
+        {% endfor %}
 
         <div class="row mb-3">
             <div class="col-md-6 offset-md-6">
@@ -96,12 +80,8 @@
                 </tbody>
             </table>
         </div>
-           <span class="badge badge-sm bg-gradient-faded-success-vertical">  {{ knp_pagination_render(conferences) }} </span>
-<br>
-
+        
+        <span class="badge badge-sm bg-gradient-faded-success-vertical">{{ knp_pagination_render(conferences) }}</span>
+        <br>
     </div>
 {% endblock %}
-
-
-
-

@@ -3,6 +3,9 @@
 {% block title %}Association{% endblock %}
 
 {% block body %}
+    {% block header %}
+        {{ parent() }}
+    {% endblock %}
 
     <div class="card custom-card">
         <div class="card-body">
@@ -26,7 +29,9 @@
                         <th>Logo</th>
                         <td>
                             {% if association.logo %}
-                            <td><img src="{{ asset('uploads/img/' ~ association.logo) }}" alt="" style="width: 70px" style="height:70px"></td>
+                                <div class="text-center">
+                                    <img src="{{ asset('uploads/img/' ~ association.logo) }}" alt="" style="width: 70px; height: 70px;">
+                                </div>
                             {% else %}
                                 Aucun logo disponible
                             {% endif %}
@@ -40,8 +45,6 @@
             </table>
 
             <a href="{{ path('app_associationfront_index') }}" class="btn btn-primary">Retour à la liste</a>
-
-
         </div>
     </div>
 {% endblock %}

@@ -16,23 +16,20 @@ class AssociationType extends AbstractType
         $builder
             ->add('nom', null, [
                 'constraints' => [
-                    new Assert\NotBlank(),
+                    new Assert\NotBlank(['message' => 'Veuillez saisir un nom.']),
                 ],
             ])
             ->add('description', null, [
                 'constraints' => [
-                    new Assert\NotBlank(),
+                    new Assert\NotBlank(['message' => 'Veuillez saisir une description.']),
                 ],
             ])
-          
-
             ->add('logo', FileType::class,['mapped'=>false, array('data_class' => null)])
             ->add('logo', FileType::class, array('data_class' => null,'required' => false))
-
             
-                        ->add('siteweb', null, [
+            ->add('siteweb', null, [
                 'constraints' => [
-                    new Assert\Url(),
+                    new Assert\Url(['message' => 'Veuillez saisir une URL valide.']),
                 ],
             ])
         ;

@@ -11,7 +11,7 @@
                 </div>
             </div>
 
-            <form method="post" enctype="multipart/form-data">
+            <form method="post" enctype="multipart/form-data" novalidate>
                 {{ form_start(form) }}
 
                 <div class="form-group">
@@ -23,20 +23,20 @@
                 <div class="form-group">
                     <label for="form_description">Description</label>
                     {{ form_errors(form.description) }}
-                    {{ form_widget(form.description, {'attr': {'class': 'form-control', 'id': 'form_description', 'minlength': 20}}) }}
+                    {{ form_widget(form.description, {'attr': {'class': 'form-control', 'id': 'form_description', 'minlength': 20}, 'required': false}) }}
                     <small class="text-muted">Minimum 20 caractères</small>
                 </div>
 
                 <div class="form-group">
                     <label for="form_logo">Logo</label>
                     {{ form_errors(form.logo) }}
-                    {{ form_widget(form.logo, {'attr': {'class': 'form-control-file', 'id': 'form_logo'}}) }}
+                    {{ form_widget(form.logo, {'attr': {'class': 'form-control-file', 'id': 'form_logo'}, 'required': false}) }}
                 </div>
 
                 <div class="form-group">
                     <label for="form_siteweb">Site Web</label>
                     {{ form_errors(form.siteweb) }}
-                    {{ form_widget(form.siteweb, {'attr': {'class': 'form-control', 'id': 'form_siteweb'}}) }}
+                    {{ form_widget(form.siteweb, {'attr': {'class': 'form-control', 'id': 'form_siteweb'}, 'required': false}) }}
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>

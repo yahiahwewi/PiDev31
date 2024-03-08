@@ -11,32 +11,32 @@
                 </div>
             </div>
 
-            <form method="post" enctype="multipart/form-data">
+            <form method="post" enctype="multipart/form-data" novalidate>
                 {{ form_start(form) }}
 
                 <div class="form-group">
                     <label for="form_nom">Nom</label>
                     {{ form_errors(form.nom) }}
-                    {{ form_widget(form.nom, {'attr': {'class': 'form-control', 'id': 'form_nom'}}) }}
+                    {{ form_widget(form.nom, {'attr': {'class': 'form-control', 'id': 'form_nom'}, 'invalid_message': ''}) }}
                 </div>
 
                 <div class="form-group">
                     <label for="form_description">Description</label>
                     {{ form_errors(form.description) }}
-                    {{ form_widget(form.description, {'attr': {'class': 'form-control', 'id': 'form_description', 'minlength': 20}}) }}
+                    {{ form_widget(form.description, {'attr': {'class': 'form-control', 'id': 'form_description'}, 'invalid_message': ''}) }}
                     <small class="text-muted">Minimum 20 caractères</small>
                 </div>
 
                 <div class="form-group">
                     <label for="form_logo">Logo</label>
                     {{ form_errors(form.logo) }}
-                    {{ form_widget(form.logo, {'attr': {'class': 'form-control-file', 'id': 'form_logo'}}) }}
+                    {{ form_widget(form.logo, {'attr': {'class': 'form-control-file', 'id': 'form_logo'}, 'invalid_message': 'Please upload a logo image.'}) }}
                 </div>
 
                 <div class="form-group">
                     <label for="form_siteweb">Site Web</label>
                     {{ form_errors(form.siteweb) }}
-                    {{ form_widget(form.siteweb, {'attr': {'class': 'form-control', 'id': 'form_siteweb'}}) }}
+                    {{ form_widget(form.siteweb, {'attr': {'class': 'form-control', 'id': 'form_siteweb'}, 'invalid_message': ''}) }}
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>

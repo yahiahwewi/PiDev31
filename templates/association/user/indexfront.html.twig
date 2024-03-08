@@ -3,7 +3,9 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block body %}
- 
+ {% block header %}
+        {{ parent() }}
+    {% endblock %}
     <div class="container">
         <h1 class="mt-4 mb-4">Dashboard</h1>
 
@@ -69,7 +71,7 @@
             </table>
         </div>
         <a href="{{path('trinomfront') }}"><i class="btn btn-danger" data-feather="arrow-down"></i>ascendant nom</a>
-        <a href="{{path('trinomdesfront') }}"><i class="btn btn-danger" data-feather="arrow-down"></i>ascendant nom</a>
+        <a href="{{path('trinomdesfront') }}"><i class="btn btn-danger" data-feather="arrow-down"></i>descendant nom</a>
 
     </div>
 {% endblock %}

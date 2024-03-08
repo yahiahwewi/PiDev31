@@ -3,6 +3,9 @@
 {% block title %}Conference{% endblock %}
 
 {% block body %}
+{% block header %}
+        {{ parent() }}
+    {% endblock %}
    
     <div class="card custom-card">
         <div class="card-body">
