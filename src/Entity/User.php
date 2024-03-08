@@ -8,6 +8,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserTrait;
+
 
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -15,6 +17,25 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+
+    #[ORM\Column(length: 255)]
+    private $registrationDate;
+
+    public function getRegistrationDate(): ?string
+    {
+        return $this->registrationDate;
+    }
+
+    public function setRegistrationDate(?string $registrationDate): self
+    {
+        $this->registrationDate = $registrationDate;
+
+        return $this;
+    }
+
+
+    // use UserTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -27,6 +48,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
+    
     // #[Assert\EqualTo(propertyPath: 'password', message: 'The passwords do not match.')]
 // private ?string $confirmPassword = null;
 
@@ -99,6 +121,9 @@ public function getUserIdentifier(): ?string
 
     // #[Assert\NotBlank(groups: ['registration'])]
     private ?string $plainPassword = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $is_gold = null;
 
     public function getPlainPassword(): ?string
     {
@@ -190,10 +215,9 @@ public function getUserIdentifier(): ?string
         return $this;
     }
 
-     public function getRoles(): array
+    public function getRoles(): array
     {
-        // Implement logic to return user roles (e.g., ['ROLE_USER'])
-        return ['ROLE_USER'];
+        return [$this->role];
     }
 
     public function getSalt(): ?string
@@ -215,6 +239,18 @@ public function getUserIdentifier(): ?string
     public function setRole(string $role): static
     {
         $this->role = $role;
+
+        return $this;
+    }
+
+    public function isIsGold(): ?bool
+    {
+        return $this->is_gold;
+    }
+
+    public function setIsGold(?bool $is_gold): static
+    {
+        $this->is_gold = $is_gold;
 
         return $this;
     }

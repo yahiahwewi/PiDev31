@@ -17,9 +17,9 @@ app_login:
     controller: 'App\Controller\LoginController::login'
 
 
-edit_user:
-    path: '/edit-user/{id}'
-    controller: 'App\Controller\UserController::editProfile'
+# edit_user:
+#     path: '/edit-user/{id}'
+#     controller: 'App\Controller\UserController::editProfile'
 
 
 not_found:
@@ -27,3 +27,42 @@ not_found:
     controller: App\Controller\SecurityController::notfound
     requirements:
         catchall: '.*'
+
+
+admin_logout:
+    path: '/logout'
+    controller: App\Controller\AdminController::logout
+
+search:
+    path: /search
+    controller: 'App\Controller\SearchController::search'
+getUserById:
+    path: '/SeeUser/{id}'
+    controller: 'App\Controller\UserController::getUserById'
+    methods: ['GET']
+
+
+set_gold_member:
+    path: /set-gold-member/{id}
+    controller: App\Controller\SecurityController::setGoldMember
+    methods: [POST]
+
+
+    # routes.yaml
+update_user_is_gold:
+    path: '/updateUserIsGold/{id}'
+    controller: App\Controller\SecurityController::updateUserIsGold
+    methods: POST
+
+    
+# admin_dashboard:
+#     path: '/admin'
+#     controller: App\Controller\SecurityController::admin
+
+# app_admin_login:
+#     path: /admin-login
+#     controller: App\Controller\AdminController::login
+
+# app_admin_dashboard:
+#     path: /admin
+#     controller: App\Controller\AdminController::dashboard

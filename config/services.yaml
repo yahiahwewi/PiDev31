@@ -6,6 +6,11 @@
 parameters:
 
 services:
+    App\Service\EmailService:
+        arguments:
+            $mailer: '@Symfony\Component\Mailer\MailerInterface'
+            $twig: '@twig'
+
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.

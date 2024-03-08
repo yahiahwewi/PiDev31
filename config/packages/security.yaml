@@ -24,35 +24,27 @@ security:
             security: false
 
         main:
-        
             form_login:
-                login_path: login
-                check_path: login
-                default_target_path: dashboard # Redirect after successful login
-                # default_target_path: app_security # Redirect after successful login
+                login_path: app_login  # Change this to match the user login route name
+                check_path: app_login  # Change this to match the user login route name
+                default_target_path: dashboard  # Redirect after successful login for user
 
             # Lazy authentication initiation only when necessary
             lazy: true
 
             # Choose an appropriate user provider based on your configuration
             provider: app_user_provider
-            # provider: users_in_memory
 
-            # Custom authenticator for handling login logic
+            # Custom authenticators for handling login logic
             custom_authenticator:
-                - App\Security\LoginAuthenticator
-                # - App\Security\AdminAuthAuthenticator
-                # - App\Security\AdminAuthenticator
-                # - App\Security\AdminAuthenticator
-
+                - App\Security\LoginAuthenticator  # Admin authenticator
 
             # Specify the entry point for the firewall
             entry_point: App\Security\LoginAuthenticator
 
             logout:
                 path: app_logout
-                # where to redirect after logout
-                target: app_login
+                target: app_login  # Change this to match the user login route name
 
             remember_me:
                 secret: '%kernel.secret%'
@@ -63,9 +55,11 @@ security:
     access_control:
 
         - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/edit-details/\d+, roles: ROLE_USER }
-        - { path: ^/edit-password/\d+, roles: ROLE_USER }
-        - { path: ^/edit-password/\d+, roles: ROLE_USER }
+        - { path: ^/edit-details/\d+, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/edit-password/\d+, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+
+
         # - { path: ^/admin, roles: ROLE_ADMIN }
 
 

@@ -1,85 +1,57 @@
 {% extends 'admin/admin-base.html.twig' %}
 {% block body %}
 
-<body>
 
-<main>
-    <div class="container">
-
-        <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
-
-                        <div class="d-flex justify-content-center py-4">
-                            <a href="index.html" class="logo d-flex align-items-center w-auto">
-                                <img src="{{ asset('img/logo1.png') }}" alt="">
-                                <span class="d-none d-lg-block">TuniKind</span>
+      {% block header %}
+        <div class="tm-main-content" id="top">
+            <div class="tm-top-bar-bg"></div>    
+            <div class="tm-top-bar" id="tm-top-bar">
+                <div class="container">
+                    <div class="row">
+                        <nav class="navbar navbar-expand-lg narbar-light">
+                            <a class="navbar-brand mr-auto" href="#">
+                                <img src="img/logo1.png" alt="Site logo">
+                                TuniKind
                             </a>
-                        </div>
+                            <button type="button" id="nav-toggle" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div id="mainNav" class="collapse navbar-collapse tm-bg-white">
+                                <ul class="navbar-nav ml-auto">
+                                  <li class="nav-item">
+                                    <a class="nav-link active" href="#top">Login <span class="sr-only">(current)</span></a>
+                                </li>
+                                 {# {% if app.user %}
+        <div class="mb-3">
+            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+        </div>
+    {% endif %} #}
+                            </ul>
+                        </div>                            
+                    </nav>
+                </div> <!-- row -->
+            </div> <!-- container -->
+        </div> <!-- .tm-top-bar -->
+{% endblock %}
 
-                        <div class="card mb-3">
 
-                            <div class="card-body">
+<div class="card custom-card">
+    <div class="card-body">
+        <h5 class="card-title text-center">Login</h5>
 
-                                <div class="pt-4 pb-2">
-                                    <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
-                                </div>
 
-    {{ form_start(form, {'attr': {'class': 'row g-3 needs-validation', 'novalidate': 'novalidate'}}) }}
+<form method="post">
 
-    <div class="col-12">
-        {{ form_label(form.email, 'E-mail', {'label_attr': {'class': 'form-label'}}) }}
-        {{ form_widget(form.email, {'attr': {'class': 'form-control', 'id': 'inputEmail', 'autocomplete': 'email', 'required': 'required', 'autofocus': 'autofocus'}}) }}
-   
-   
-    </div>
+    <label for="inputEmail">Email</label>
+    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+    <label for="inputPassword">Password</label>
+    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 
-    <div class="col-12">
-        {{ form_label(form.password, 'Password', {'label_attr': {'class': 'form-label'}}) }}
-        {{ form_widget(form.password, {'attr': {'class': 'form-control', 'id': 'inputPassword', 'autocomplete': 'current-password', 'required': 'required'}}) }}
-    </div>
-
-    <div class="col-12">
-        {{ form_widget(form._token, {'attr': {'class': 'form-control', 'type': 'hidden'}}) }}
-    </div>
-
-   <button class="btn btn-lg btn-primary" type="submit">
+    <input type="hidden" name="_csrf_token"
+           value="{{ csrf_token('authenticate') }}" >
+<br>
+    <button class="btn btn-lg btn-primary" type="submit">
         Sign in
     </button>
-
-    {{ form_end(form) }}
-
-                            </div>
-                        </div>
-
-                        <div class="credits">
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-        </section>
-
-    </div>
-</main><!-- End #main -->
-
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/chart.js/chart.umd.js"></script>
-  <script src="assets/vendor/echarts/echarts.min.js"></script>
-  <script src="assets/vendor/quill/quill.min.js"></script>
-  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
-  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-
-  <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
-
-</body>
-
+</form>
 {% endblock %}

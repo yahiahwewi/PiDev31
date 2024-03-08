@@ -42,18 +42,20 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
         );
     }
 
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
+     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        // Get the user from the token (you can adjust this based on your user provider)
+        // Get the user from the token
         $user = $token->getUser();
 
-        // Assuming your user entity has a method to get the user's profile route
-        $targetPath = $user->getProfileRoute(); // Replace with the actual method
-
-        // If the user doesn't have a specific profile route, redirect to the default target path
-        if (!$targetPath) {
-            $targetPath = $this->getTargetPath($request->getSession(), $firewallName) ?: $this->urlGenerator->generate('default_route');
+        // Check if the user has the ROLE_ADMIN role
+        if ($user->getRole() === 'ROLE_ADMIN') {
+            // User has the ROLE_ADMIN role
+            return new RedirectResponse($this->urlGenerator->generate('admin_dashboard'));
+        } else {
+            // User does not have the ROLE_ADMIN role
+            return new RedirectResponse($this->urlGenerator->generate('default_route'));
         }
+        
 
         return new RedirectResponse($targetPath);
     }
@@ -63,3 +65,5 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
     }
 }
+
+

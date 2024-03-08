@@ -1,0 +1,84 @@
+{% extends 'admin/admin-base.html.twig' %}
+
+{% block body %}
+{% block header %}
+
+    {{ parent() }}
+{% endblock %}
+
+<div class="card">
+<div class="card-body small-card">
+<a href="{{ path('admin_dashboard') }}" class="back-button">Back</a>  <h5 class="card-title">Edit you informations</h5>
+
+              <!-- Advanced Form Elements -->
+{{ form_start(form, {'attr': {'class': 'form'}}) }}
+
+<div class="form-group">
+    {{ form_label(form.name, 'Name', {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.name) }}
+</div>
+
+<div class="form-group">
+    {{ form_label(form.email, 'Email', {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.email, {'attr': {'class': 'form-control', 'readonly': 'readonly'}}) }}
+    {{ form_errors(form.email) }}
+</div>
+
+<div class="form-group">
+    {{ form_label(form.city, 'City', {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.city, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.city) }}
+</div>
+
+<div class="form-group">
+    {{ form_label(form.country, 'Country', {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.country, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.country) }}
+</div>
+
+<div class="form-group">
+    {{ form_label(form.phone, 'Phone', {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.phone, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.phone) }}
+</div>
+
+<button type="submit" class="btn btn-primary mt-5">Save Changes</button>
+<br>
+{# <a href="{{ path('admin') }}" class="btn btn-primary mt-4">Back</a> #}
+
+{{ form_end(form) }}
+
+            </div>
+          </div>
+          
+          
+
+          <style>
+            .card {
+
+    max-width: 4000px;
+            margin-top: 85px;
+
+  }
+
+  .small-card {
+    max-width: 4000px;
+            margin: 55px;
+
+    padding: 0px;
+    position: relative;
+  }
+
+  .back-button {
+    position: relative;
+    padding: 5px 10px;
+    background-color: #f5f5f5;
+    border: none;
+
+    border-radius: 10px;
+    cursor: pointer;
+  }
+</style>
+
+          {% endblock %}

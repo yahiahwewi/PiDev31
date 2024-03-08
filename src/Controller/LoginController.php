@@ -10,10 +10,26 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LoginController extends AbstractController
 {
+
+
+
+    // #[Route('/admin', name: 'admin_dashboard')]
+    // public function admin(): Response
+    // {
+    //     return $this->render('admin/admin.html.twig', [
+    //         'controller_name' => 'SecurityController',
+    //     ]);
+    // }
+
+
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-     
+      // Check if the user is already authenticated
+    if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
+        // Redirect the user to the admin dashboard
+        return $this->redirectToRoute('admin_dashboard');
+    }
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
