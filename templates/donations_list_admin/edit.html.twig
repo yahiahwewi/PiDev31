@@ -1,0 +1,47 @@
+{% extends 'admin-base.html.twig' %}
+
+{% block title %}Edit Donation{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Edit Donation</h1>
+
+        <form action="{{ path('admin_donations_edit', {'id': donations_list.id}) }}" method="post">
+            <div class="row justify-content-center mt-4">
+                <div class="col-md-6">
+                    {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+
+                    {{ form_errors(form) }}
+                    {{ form_row(form.date, {'attr': {'class': 'form-control'}, 'invalid_message': 'Votre message d\'erreur personnalisé pour la date'}) }}
+                    {{ form_row(form.donator_id_id, {'attr': {'class': 'form-control'}, 'invalid_message': 'Votre message d\'erreur personnalisé pour le lieu'}) }}
+                    {{ form_row(form.project,{'attr': {'class': 'form-control'}, 'invalid_message': "Votre message d\'erreur personnalisé pour le lieu"})}}
+                    
+                    {# Autres champs de formulaire... #}
+                    
+                {{ form_end(form) }}
+                <button class="btn">{{ button_label|default('Save') }}</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-6">
+                <a href="{{ path('admin_donations_index') }}" class="btn btn-secondary btn-block">
+                    <i class="fas fa-arrow-left"></i> Back to list
+                </a>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-6">
+                <form action="{{ path('admin_donations_delete', {'id': donations_list.id}) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ donations_list.id) }}">
+                    <button type="submit" class="btn btn-danger btn-block">
+                        <i class="fas fa-trash-alt"></i> Delete
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -29,32 +29,29 @@ class Donator
     #[Assert\Email]
     private ?string $Email = null;
 
-     #[ORM\Column(length: 255)]
-     #[Assert\NotBlank]
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $Password = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'float')]
     #[Assert\NotBlank]
-    private ?int $Montant = null; 
+    private ?float $Montant = null;
 
+    // #[ORM\Column(type: 'datetime')]
+    // private ?\DateTimeInterface $createdAt = null;
 
- 
-    private ?\DateTimeInterface $createdAt = null;
-
-    #[ORM\OneToMany(mappedBy: 'Donator_id', targetEntity: DonationsList::class)]
+    #[ORM\OneToMany(mappedBy: 'donator_id_id', targetEntity: DonationsList::class)]
     private Collection $donationsLists;
 
     public function __construct()
     {
         $this->donationsLists = new ArrayCollection();
     }
+
     public function getId(): ?int
     {
         return $this->id;
     }
-   
-
-  
 
     public function getNom(): ?string
     {
@@ -104,30 +101,29 @@ class Donator
         return $this;
     }
 
-    public function getMontant(): ?int
+    public function getMontant(): ?float
     {
         return $this->Montant;
     }
-    
-    public function setMontant(?int $Montant): self
+
+    public function setMontant(?float $Montant): self
     {
         $this->Montant = $Montant;
-    
-        return $this;
-    }
-    
-
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
 
         return $this;
     }
+
+    // public function getCreatedAt(): ?\DateTimeInterface
+    // {
+    //     return $this->createdAt;
+    // }
+
+    // public function setCreatedAt(\DateTimeInterface $createdAt): self
+    // {
+    //     $this->createdAt = $createdAt;
+
+    //     return $this;
+    // }
 
     /**
      * @return Collection<int, DonationsList>
@@ -141,7 +137,7 @@ class Donator
     {
         if (!$this->donationsLists->contains($donationsList)) {
             $this->donationsLists->add($donationsList);
-            $donationsList->setDonatorId($this);
+            $donationsList->setDonatorIdId($this);
         }
 
         return $this;
@@ -151,13 +147,11 @@ class Donator
     {
         if ($this->donationsLists->removeElement($donationsList)) {
             // set the owning side to null (unless already changed)
-            if ($donationsList->getDonatorId() === $this) {
-                $donationsList->setDonatorId(null);
+            if ($donationsList->getDonatorIdId() === $this) {
+                $donationsList->setDonatorIdId(null);
             }
         }
 
         return $this;
     }
 }
-    
-

@@ -24,7 +24,7 @@ class DonationsListController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_donations_list_new',  methods: ['GET','POST'])]
+    #[Route('/new', name: 'app_donations_list_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $donationsList = new DonationsList();
@@ -32,6 +32,11 @@ class DonationsListController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Assurez-vous que le projet associé est récupéré à partir des données soumises
+            $project = $form->get('project')->getData();
+            $donationsList->setProject($project);
+
+            // Persistez les données dans la base de données
             $entityManager->persist($donationsList);
             $entityManager->flush();
 
@@ -39,7 +44,6 @@ class DonationsListController extends AbstractController
         }
 
         return $this->render('donations_list/new.html.twig', [
-            'donations_lists' => $donationsList,
             'form' => $form->createView(),
         ]);
     }
@@ -70,14 +74,14 @@ class DonationsListController extends AbstractController
         ]);
     }
 
-#[Route('/donations/{id}', name: 'app_donations_delete')]
-public function delete(DonationsList $donation): Response
-{
-    $entityManager = $this->getDoctrine()->getManager();
-    $entityManager->remove($donation);
-    $entityManager->flush();
+    #[Route('/donations/{id}', name: 'app_donations_delete', methods: ['POST'])]
+    public function delete(Request $request, DonationsList $donation, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$donation->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($donation);
+            $entityManager->flush();
+        }
 
-    return $this->redirectToRoute('app_donations_list_index');
-}
-
+        return $this->redirectToRoute('app_donations_list_index');
+    }
 }

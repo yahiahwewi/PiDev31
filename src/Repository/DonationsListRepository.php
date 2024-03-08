@@ -45,4 +45,13 @@ class DonationsListRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+
+public function triass()
+{
+    return $this->createQueryBuilder('donation')
+        ->orderBy('donation.montant', 'ASC')
+        ->getQuery()
+        ->getResult();
+}
 }

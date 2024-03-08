@@ -3,3 +3,8 @@
 controllers:
     resource: ../src/Controller/
     type: annotation
+
+admin_donations_recherche:
+    path: /Admin/Donation/recherche
+    controller: ../src/Controller/DonationAdminController::recherche
+    methods: ['GET']

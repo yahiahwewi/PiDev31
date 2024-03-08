@@ -1,0 +1,166 @@
+{% extends 'admin-base.html.twig' %}
+
+{% block title %}DonationsList{% endblock %}
+
+{% block body %}
+    
+    <h1 class="text-center mb-4">DonationsList</h1>
+
+    <div class="container" >
+        <div class="row">
+            <div class="col-12">
+                <input type="text" onkeyup="search()" id="search" />
+                </div>
+        </div>
+        <div id="donations-container">
+        <table id="table-donations" class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="text-center">Id</th>
+                    <th class="text-center">Date</th>
+                    <th class="text-center">Montant</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for donations_list in donations_lists %}
+                <tr>
+                    <td class="text-center">{{ donations_list.id }}</td>
+                    <td class="text-center">{{ donations_list.date ? donations_list.date|date('Y-m-d') : '' }}</td>
+                    <td class="text-center">{{ donations_list.montant }}</td>
+                    <td class="text-center">
+                        <a href="{{ path('admin_donations_list_show', {'id': donations_list.id}) }}" class="btn btn-sm btn-outline-primary me-2">
+                            <i class="fas fa-eye"></i> 
+                        </a>
+                        <a href="{{ path('admin_donations_edit', {'id': donations_list.id}) }}" class="btn btn-sm btn-outline-secondary">
+                            <i class="fas fa-edit"></i> 
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4" class="text-center">No records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+
+    <script language="JavaScript"  src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js" defer></script>
+        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
+        <script>
+        $(document).ready(function () {
+            const descriptionContainers = document.querySelectorAll('div.description-container');
+            descriptionContainers.forEach(container => {
+                const readMoreButton = container.querySelector('a.read-more-btn');
+                const showLessButton = container.querySelector('a.show-less-btn');
+                const fullDescription = container.querySelector('div.full-description');
+                const truncatedDescription = container.querySelector('p');
+                readMoreButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    fullDescription.style.display = 'block';
+                    truncatedDescription.style.display = 'none';
+                    readMoreButton.style.display = 'none';
+                    showLessButton.style.display = 'inline';
+                });
+                showLessButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    fullDescription.style.display = 'none';
+                    truncatedDescription.style.display = 'block';
+                    readMoreButton.style.display = 'inline';
+                    showLessButton.style.display = 'none';
+                });
+            });
+            {# var a = $("#example1").DataTable ({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                "buttons": [
+                    "copy",
+                    "csv",
+                    "excel",
+                    "pdf",
+                    "print"
+                ]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)'); #}
+    
+    
+        })
+    function readmoreless()
+    {
+          const descriptionContainers = document.querySelectorAll('div.description-container');
+            descriptionContainers.forEach(container => {
+                const readMoreButton = container.querySelector('a.read-more-btn');
+                const showLessButton = container.querySelector('a.show-less-btn');
+                const fullDescription = container.querySelector('div.full-description');
+                const truncatedDescription = container.querySelector('p');
+                readMoreButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    fullDescription.style.display = 'block';
+                    truncatedDescription.style.display = 'none';
+                    readMoreButton.style.display = 'none';
+                    showLessButton.style.display = 'inline';
+                });
+                showLessButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    fullDescription.style.display = 'none';
+                    truncatedDescription.style.display = 'block';
+                    readMoreButton.style.display = 'inline';
+                    showLessButton.style.display = 'none';
+                });
+            });
+    }
+    function search()
+    {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("search").value ; 
+     $.ajax({
+            method: "GET",
+            url: "{{ path('admin_donations_recherche') }}",
+            data: {search: input},
+            success: function(response){
+                console.log(response);   
+                $('#example1 tbody').empty();
+                if (response.length === 0) {
+              var messageRow = $('<tr>').append($('<td colspan="3">').text('No results found.'));
+              $('#example1 tbody').append(messageRow);
+              
+            } else {
+              // Add search results to table
+               $.each(response, function(index, product) {
+               
+                var row = $('<tr>');
+                row.append($('<td>').text(donations_list.montant));
+                row.append($('<td>').text(donations_list.date));
+                    var descriptionCell = $('<td>');
+            var descriptionContainer = $('<div>').addClass('table table-striped');
+            var descriptionParagraph = $('<p>').text(donations_list.montant.slice(0, 2)+"...");
+            if (product.prodDescription.length > 2) {
+                descriptionParagraph.append($('<a>').text('Read More').addClass('read-more-btn'));
+            }
+            var fullDescription = $('<div>').addClass('full-description').text(donations_list.montant).hide();
+            descriptionContainer.append(descriptionParagraph, fullDescription);
+            if (product.prodDescription.length > 2) {
+                descriptionContainer.append($('<a>').text('Show Less').addClass('show-less-btn').hide());
+            }
+            descriptionCell.append(descriptionContainer);
+            row.append(descriptionCell);
+                row.append($('<td>').text(donations_list.montant));
+                row.append($('<td>').text(donations_list.date));
+                row.append($('<td>').text(donations_list.id));
+                $('#example1 tbody').append(row);
+              });
+              readmoreless();
+            }
+            }
+        });}
+        </script>
+        <span class="badge badge-sm bg-gradient-faded-success-vertical">  {{ knp_pagination_render(donations_lists) }} </span>
+
+{% endblock %}
+

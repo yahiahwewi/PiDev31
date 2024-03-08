@@ -1,36 +1,37 @@
 <?php
 
-
 namespace App\Entity;
 
 use App\Repository\DonationsListRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Entity\Donator; // Import de la classe Donator
-
 
 #[ORM\Entity(repositoryClass: DonationsListRepository::class)]
 class DonationsList
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(type: "integer")]
+    private $id;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Assert\NotBlank(message: 'Please provide a date')]
-    private ?\DateTimeInterface $date = null;
+    #[Assert\NotBlank(message: "Please provide a date")]
+    private $date;
 
-    #[ORM\ManyToOne(inversedBy: 'donationsLists')]
-    #[ORM\JoinColumn(name: "donator_id_id", referencedColumnName: "id", nullable: false)]
-    #[Assert\NotBlank(message: 'Please select a donator')]
-    private ?Donator $donator_id_id = null;
+    #[ORM\ManyToOne(targetEntity: Donator::class, inversedBy: "donationsLists")]
+    #[ORM\JoinColumn(nullable: false, name: "donator_id_id", referencedColumnName: "id")]
+    #[Assert\NotBlank(message: "Please select a donator")]
+    private $donator_id_id;
 
-    #[ORM\Column]
-    #[Assert\NotBlank(message: 'Please provide an amount')]
-    #[Assert\Type(type: 'integer', message: 'The amount should be an integer')]
-    private ?int $montant = null;
+    #[ORM\ManyToOne(targetEntity: Projects::class, inversedBy: "donationsLists")]
+    #[ORM\JoinColumn(nullable: false, name: "project_id", referencedColumnName: "id")]
+    private $project;
+
+    #[ORM\Column(type: "integer")]
+    #[Assert\NotBlank(message: "Please provide an amount")]
+    #[Assert\Type(type: "integer", message: "The amount should be an integer")]
+    private $montant;
 
     public function getId(): ?int
     {
@@ -45,6 +46,7 @@ class DonationsList
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
+
         return $this;
     }
 
@@ -53,9 +55,22 @@ class DonationsList
         return $this->donator_id_id;
     }
 
-    public function setDonatorIdId(?Donator $donator): static
+    public function setDonatorIdId(?Donator $donator_id_id): self
     {
-        $this->donator_id_id = $donator;
+        $this->donator_id_id = $donator_id_id;
+
+        return $this;
+    }
+
+    public function getProject(): ?Projects
+    {
+        return $this->project;
+    }
+
+    public function setProject(?Projects $project): self
+    {
+        $this->project = $project;
+
         return $this;
     }
 
@@ -67,6 +82,7 @@ class DonationsList
     public function setMontant(?int $montant): self
     {
         $this->montant = $montant;
+
         return $this;
     }
 }

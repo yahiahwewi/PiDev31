@@ -12,7 +12,17 @@
         <form action="{{ path('app_donations_list_edit', {'id': donations_list.id}) }}" method="post">
             <div class="row justify-content-center mt-4">
                 <div class="col-md-6">
-                    {{ include('donations_list/_form.html.twig', {'button_label': 'Update'}) }}
+                    {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+
+                    {{ form_errors(form) }}
+                    {{ form_row(form.date, {'attr': {'class': 'form-control'}, 'invalid_message': 'Votre message d\'erreur personnalisé pour la date'}) }}
+                    {{ form_row(form.donator_id_id, {'attr': {'class': 'form-control'}, 'invalid_message': 'Votre message d\'erreur personnalisé pour le lieu'}) }}
+                    {{ form_row(form.project,{'attr': {'class': 'form-control'}, 'invalid_message': "Votre message d\'erreur personnalisé pour le lieu"})}}
+                    
+                    {# Autres champs de formulaire... #}
+                    
+                {{ form_end(form) }}
+                <button class="btn">{{ button_label|default('Save') }}</button>
                 </div>
             </div>
         </form>
